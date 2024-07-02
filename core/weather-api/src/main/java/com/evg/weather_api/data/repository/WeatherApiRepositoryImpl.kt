@@ -41,7 +41,6 @@ class WeatherApiRepositoryImpl(
                     fos.write(responseBody.bytes())
                     fos.close()
 
-                    // Распаковка gz файла
                     val jsonFile = File(context.cacheDir, "currentCityList.json")
 
                     GZIPInputStream(FileInputStream(file)).use { gzInputStream ->
@@ -50,12 +49,10 @@ class WeatherApiRepositoryImpl(
                         }
                     }
 
-                    // Чтение JSON файла
                     val jsonString = jsonFile.readText()
                     val listType = object : TypeToken<List<CityResponse>>() {}.type
                     val cities: List<CityResponse> = Gson().fromJson(jsonString, listType)
 
-                    // Cохранение в бд
                     databaseRepository.insertCities(cities.map { it.toCityDBO() })
 
                     val editor = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE).edit()

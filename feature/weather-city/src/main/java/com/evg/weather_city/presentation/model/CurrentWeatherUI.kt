@@ -1,5 +1,6 @@
 package com.evg.weather_city.presentation.model
 
+import org.intellij.lang.annotations.Pattern
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -21,18 +22,7 @@ data class CurrentWeatherUI(
     val id: Int, 
     val name: String,
     // val cod: Int
-) {
-    fun getUpdateTime(): String {
-        val instant = Instant.ofEpochSecond(this.timestamp)
-
-        val zoneId = ZoneId.systemDefault()
-        val localTime = ZonedDateTime.ofInstant(instant, zoneId)
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-
-        return localTime.format(formatter)
-    }
-}
-
+)
 
 data class CurrentWeatherCoordinatesUI(
     val lon: Double, 

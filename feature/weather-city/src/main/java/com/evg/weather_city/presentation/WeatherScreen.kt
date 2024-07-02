@@ -1,12 +1,7 @@
 package com.evg.weather_city.presentation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,10 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.evg.weather_city.presentation.mapper.toCurrentWeatherUI
 import com.evg.weather_city.presentation.viewmodel.WeatherCityViewModel
 
 @Composable
@@ -28,6 +20,7 @@ fun WeatherCityScreen(
     var isInitialized by rememberSaveable { mutableStateOf(false) }
 
     val currentWeather by viewModel.currentWeather.collectAsState()
+    val hourlyWeather by viewModel.hourlyForecast.collectAsState()
     val dailyWeather by viewModel.dailyForecast.collectAsState()
 
     if (!isInitialized) {
@@ -38,29 +31,15 @@ fun WeatherCityScreen(
         }
     }
 
-    if (currentWeather == null) {
+    if (currentWeather == null || hourlyWeather == null || dailyWeather == null) {
         CircularProgressIndicator(
             color = MaterialTheme.colorScheme.primary
         )
     } else {
-        currentWeather?.let {
-            WeatherContent(
-                currentWeather = it
-            )
-        }
+        WeatherContent(
+            currentWeather = currentWeather!!,
+            hourlyWeather = hourlyWeather!!,
+            dailyWeather = dailyWeather!!,
+        )
     }
-
-    /*Column(
-        modifier = Modifier
-            .padding(50.dp)
-    ) {
-        Text(text = "Opened $cityId")
-        currentWeather?.let {
-            Text(text = "Update time ${it.getUpdateTime()}")
-        }
-        *//*Spacer(modifier = Modifier.height(10.dp))
-        dailyWeather?.let {
-            Text(text = "CurrentWeather $it")
-        }*//*
-    }*/
 }

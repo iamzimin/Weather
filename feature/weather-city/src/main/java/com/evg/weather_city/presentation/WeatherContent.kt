@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -49,10 +50,14 @@ import com.evg.weather_city.presentation.model.CurrentWeatherSnowUI
 import com.evg.weather_city.presentation.model.CurrentWeatherSysUI
 import com.evg.weather_city.presentation.model.CurrentWeatherUI
 import com.evg.weather_city.presentation.model.CurrentWeatherWindUI
+import com.evg.weather_city.presentation.model.DailyForecastUI
+import com.evg.weather_city.presentation.model.HourlyForecastUI
 
 @Composable
 fun WeatherContent(
     currentWeather: CurrentWeatherUI,
+    hourlyWeather: List<HourlyForecastUI>,
+    dailyWeather: List<DailyForecastUI>,
 ) {
     val horizontalPadding = 30.dp
     val scrollState = rememberScrollState()
@@ -125,7 +130,7 @@ fun WeatherContent(
                     }
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = "${currentWeather.main.tempMin} / ${currentWeather.main.tempMax}",
+                        text = "${currentWeather.main.tempMax} / ${currentWeather.main.tempMin}",
                         textAlign = TextAlign.Center,
                     )
                     Text(
@@ -145,10 +150,16 @@ fun WeatherContent(
                 .clip(shape = RoundedCornerShape(BorderRadius))
                 .background(color = Color.Gray)
         ) {
-            Text(text = "sdfdsf", modifier = Modifier.padding(50.dp))
-            /*LazyColumn {
-
-            }*/
+            LazyRow {
+                items(
+                    count = hourlyWeather.size,
+                ) { index ->
+                    HourlyRowTile(
+                        hourlyForecastUI = hourlyWeather[index],
+                        timezone = currentWeather.timezone,
+                    )
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -159,10 +170,16 @@ fun WeatherContent(
                 .clip(shape = RoundedCornerShape(BorderRadius))
                 .background(color = Color.Gray)
         ) {
-            Text(text = "sdfdsf", modifier = Modifier.padding(50.dp))
-            /*LazyColumn {
-
-            }*/
+            LazyRow {
+                items(
+                    count = dailyWeather.size,
+                ) { index ->
+                    DailyRowTile(
+                        dailyForecastUI = dailyWeather[index],
+                        timezone = currentWeather.timezone,
+                    )
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -261,7 +278,7 @@ fun WeatherContent(
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 //@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun MainScreenPreview() {
+fun WeatherContentPreview() {
     WeatherTheme {
         WeatherContent(
             currentWeather = CurrentWeatherUI(
@@ -283,7 +300,23 @@ fun MainScreenPreview() {
                 timezone = -14400,
                 id = 5128581,
                 name = "New York"
-            )
+            ),
+            hourlyWeather = List(8) {
+                HourlyForecastUI(
+                    timestamp = 1719942107,
+                    temp = 24,
+                    icon = "",
+                )
+            },
+            dailyWeather = List(5) {
+                DailyForecastUI(
+                    timestamp = 1719942107,
+                    icon = "",
+                    weatherDescription = "Cloud",
+                    tempMax = 20,
+                    tempMin = 14,
+                )
+            },
         )
     }
 }

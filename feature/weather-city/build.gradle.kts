@@ -60,4 +60,7 @@ dependencies {
     implementation(libs.dagger.hilt)
     ksp(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt.navigation)
+
+    // Coil
+    implementation(libs.coil.compose)
 }
