@@ -19,15 +19,6 @@ class WelcomeRepositoryImpl(
         val sharedPreferences = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         val isCityDownloaded = sharedPreferences.getBoolean("isCityDownloaded", false)
 
-        /*if (!isCityDownloaded) {
-            weatherApiRepository.downloadCityFile()?.let { listResponse ->
-                return flow { emit(listResponse.map { it.toCity() }) }
-            }
-        } else {
-            return flow { emit(databaseRepository.getAllCities()?.map { it.toCity() }) }
-        }
-        return flow { emit(null) }*/
-
         return flow {
             if (!isCityDownloaded) {
                 emit(weatherApiRepository.downloadCityFile()?.map { it.toCity() })

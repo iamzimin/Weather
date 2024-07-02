@@ -2,6 +2,7 @@ package com.evg.weather
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
@@ -10,10 +11,15 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
+import com.evg.resource.LocalNavHostController
 import com.evg.resource.theme.WeatherTheme
+import com.evg.weather_city.presentation.WeatherCityScreen
 import com.evg.welcome.presentation.WelcomeScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter") //TODO
@@ -21,9 +27,9 @@ import com.evg.welcome.presentation.WelcomeScreen
 fun MainScreen() {
     val navController = rememberNavController()
     val sharedPreferences = LocalContext.current.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-    val latestCity = sharedPreferences.getInt("latestCity", -1)
+    val latestCity = sharedPreferences.getInt("latestCity", -1) //TODO
 
-    CompositionLocalProvider(/*LocalNavHostController provides navController*/) {
+    CompositionLocalProvider(LocalNavHostController provides navController) {
         Scaffold(
             modifier = Modifier.fillMaxSize()
         ) { paddingValues ->
@@ -38,6 +44,21 @@ fun MainScreen() {
                     } else {
                         WelcomeScreen()
                     }
+                }
+
+                composable(
+                    route = "city/{id}",
+                    arguments = listOf(
+                        navArgument("id") {
+                            type = NavType.IntType
+                            defaultValue = -1
+                        }
+                    )
+                ) { entry ->
+                    val id = entry.arguments?.getInt("id") ?: -1
+                    WeatherCityScreen(
+                        cityId = id
+                    )
                 }
             }
         }

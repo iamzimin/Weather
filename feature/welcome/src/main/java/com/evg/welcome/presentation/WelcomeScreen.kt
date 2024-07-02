@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.evg.resource.LocalNavHostController
 import com.evg.resource.theme.WeatherTheme
 import com.evg.welcome.presentation.viewmodel.WelcomeViewModel
 
@@ -28,6 +29,7 @@ fun WelcomeScreen(
     viewModel: WelcomeViewModel = hiltViewModel<WelcomeViewModel>(),
 ) {
     val context = LocalContext.current
+    val navController = LocalNavHostController.current
     var isInitialized by rememberSaveable { mutableStateOf(false) }
 
     val cities by viewModel.cityList.collectAsState()
@@ -64,6 +66,8 @@ fun WelcomeScreen(
             //TODO
             if (city != null) {
                 Toast.makeText(context, "Navigating to ${city?.name}", Toast.LENGTH_SHORT).show()
+                val id = city?.id ?: -1
+                navController.navigate("city/${id}")
             }
 
             WelcomeText(
@@ -78,6 +82,8 @@ fun WelcomeScreen(
                     //TODO
                      if (viewModel.city.value != null) {
                         Toast.makeText(context, "Navigating to ${viewModel.city.value}", Toast.LENGTH_SHORT).show()
+                         val id = city?.id ?: -1
+                         navController.navigate("city/${id}")
                     }
                 }
             )

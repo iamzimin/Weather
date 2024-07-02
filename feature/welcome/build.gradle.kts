@@ -60,7 +60,7 @@ dependencies {
     //implementation(libs.androidx.livedata)
 
     // Retrofit
-    implementation(libs.retrofit)
+    //implementation(libs.retrofit)
 
     // Dagger Hilt
     implementation(libs.dagger.hilt)
