@@ -1,40 +1,42 @@
 package com.evg.weather_api.domain.models
 
+import com.google.gson.annotations.SerializedName
+
 data class CityResponse(
-    val id: Int,
-    val coord: Coord,
-    val country: String,
-    val geoname: Geoname,
-    val langs: List<Lang>,
-    val name: String,
-    val stat: Stat,
-    val stations: List<Station>,
-    val zoom: Int
+    @SerializedName("id") val id: Int,
+    @SerializedName("coord") val coordinates: CityCoordinates,
+    @SerializedName("country") val country: String,
+    @SerializedName("geoname") val geoname: CityGeonameResponse,
+    @SerializedName("langs") val languages: List<CityLanguagesResponse>,
+    @SerializedName("name") val name: String,
+    @SerializedName("stat") val stat: CityStatisticsResponse,
+    @SerializedName("stations") val stations: List<CityStationResponse>,
+    @SerializedName("zoom") val zoom: Int
 )
 
-data class Coord(
-    val lon: Double,
-    val lat: Double
+data class CityCoordinates(
+    @SerializedName("lon") val lon: Double,
+    @SerializedName("lat") val lat: Double
 )
 
-data class Geoname(
-    val cl: String,
-    val code: String,
-    val parent: Int
+data class CityGeonameResponse(
+    @SerializedName("cl") val cl: String,
+    @SerializedName("code") val code: String,
+    @SerializedName("parent") val parent: Int
 )
 
-data class Lang(
-    val de: String?,
-    val fa: String?
+data class CityLanguagesResponse(
+    @SerializedName("de") val de: String?, //TODO
+    @SerializedName("fa") val fa: String?
 )
 
-data class Stat(
-    val level: Double,
-    val population: Int
+data class CityStatisticsResponse(
+    @SerializedName("level") val level: Double,
+    @SerializedName("population") val population: Int
 )
 
-data class Station(
-    val id: Int,
-    val dist: Int,
-    val kf: Int
+data class CityStationResponse(
+    @SerializedName("id") val id: Int,
+    @SerializedName("dist") val dist: Int,
+    @SerializedName("kf") val kf: Int
 )

@@ -18,13 +18,23 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object WeatherApiModule {
 
-    @Named("WeatherCity")
+    @Named("City")
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
-        println("provided Retrofit")
+    fun provideCityRetrofit(): Retrofit {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://bulk.openweathermap.org/")
+            .baseUrl("https://bulk.openweathermap.org/sample/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        return retrofit
+    }
+
+    @Named("Weather")
+    @Provides
+    @Singleton
+    fun provideWeatherRetrofit(): Retrofit {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.openweathermap.org/data/2.5/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         return retrofit
@@ -34,13 +44,15 @@ object WeatherApiModule {
     @Singleton
     fun provideWeatherApiRepository(
         @ApplicationContext context: Context,
-        @Named("WeatherCity") retrofitCity: Retrofit,
+        @Named("City") retrofitCity: Retrofit,
+        @Named("Weather") retrofitWeather: Retrofit,
         databaseRepository: DatabaseRepository
     ): WeatherApiRepository {
         println("provided WeatherApiRepositoryImpl")
         return WeatherApiRepositoryImpl(
             context = context,
             retrofitCity = retrofitCity,
+            retrofitWeather = retrofitWeather,
             databaseRepository = databaseRepository,
         )
     }

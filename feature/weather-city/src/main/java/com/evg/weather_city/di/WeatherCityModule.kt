@@ -1,7 +1,8 @@
 package com.evg.weather_city.di
 
+import com.evg.weather_api.domain.repository.WeatherApiRepository
 import com.evg.weather_city.data.repository.WeatherCityRepositoryImpl
-import com.evg.welcome.domain.repository.WeatherCityRepository
+import com.evg.weather_city.domain.repository.WeatherCityRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,11 +15,11 @@ object WeatherCityModule {
     @Provides
     @Singleton
     fun provideWeatherCityRepository(
-
+        apiRepository: WeatherApiRepository
     ): WeatherCityRepository {
         println("provided provideWeatherCityRepository")
         return WeatherCityRepositoryImpl(
-
+            apiRepository = apiRepository,
         )
     }
 }

@@ -6,8 +6,8 @@ import com.evg.weather_api.domain.models.CityResponse
 fun CityResponse.toCityDBO(): CityDBO {
     return CityDBO(
         id = this.id,
-        coordLon = this.coord.lon,
-        coordLat = this.coord.lat,
+        coordLon = this.coordinates.lon,
+        coordLat = this.coordinates.lat,
         name = this.name,
     )
 }

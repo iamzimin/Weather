@@ -7,8 +7,8 @@ import com.evg.welcome.domain.model.City
 fun CityResponse.toCity(): City {
     return City(
         id = this.id,
-        coordLon = this.coord.lon,
-        coordLat = this.coord.lat,
+        coordLon = this.coordinates.lon,
+        coordLat = this.coordinates.lat,
         name = this.name,
     )
 }

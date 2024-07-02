@@ -1,7 +1,11 @@
-package com.evg.welcome.domain.repository
+package com.evg.weather_city.domain.repository
+
+import com.evg.weather_city.domain.model.CurrentWeather
+import com.evg.weather_city.domain.model.WeeklyForecast
+import kotlinx.coroutines.flow.Flow
 
 interface WeatherCityRepository {
-    suspend fun getCurrentWeather()
-    suspend fun getWeatherForDay()
-    suspend fun getWeatherForWeekUseCase()
+    fun getCurrentWeather(cityId: Int): Flow<CurrentWeather?>
+    fun getWeatherForDay(cityId: Int): Flow<WeeklyForecast?>
+    fun getWeatherForWeekUseCase(cityId: Int): Flow<WeeklyForecast?>
 }
