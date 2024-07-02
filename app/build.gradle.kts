@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.hilt.plugin)
+    alias(libs.plugins.jetbrains.kotlin.ksp)
 }
 
 android {
@@ -50,6 +53,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:resource"))
+    implementation(project(":feature:welcome"))
+    implementation(project(":feature:weather-city"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -66,4 +72,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Navigation
+    implementation(libs.androidx.ui.navigation)
+
+    // Dagger Hilt
+    implementation(libs.dagger.hilt)
+    ksp(libs.dagger.hilt.compiler)
 }

@@ -1,4 +1,4 @@
-package com.evg.weather.ui.theme
+package com.evg.resource.theme
 
 import android.app.Activity
 import android.os.Build
