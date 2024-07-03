@@ -27,11 +27,10 @@ import com.evg.welcome.presentation.mapper.toCityUI
 @Composable
 fun WelcomeContent(
     listCities: List<City>?,
-    checkCity: (String?) -> Unit,
+    setCityString: (String?) -> Unit,
     setCity: (City?) -> Unit,
     onCityApply: () -> Unit,
 ) {
-    var typedCityText: String? by rememberSaveable { mutableStateOf(null) }
 
     Column(
         modifier = Modifier
@@ -60,11 +59,12 @@ fun WelcomeContent(
                 .padding(vertical = 10.dp),
             listCities = listCities?.map { it.toCityUI() },
             onSelect = { cityUI ->
-                typedCityText = null
+                setCityString(null)
                 setCity(cityUI.toCity())
             },
             onEdit = { text ->
-                typedCityText = text
+                setCity(null)
+                setCityString(text)
             }
         )
 
@@ -72,11 +72,7 @@ fun WelcomeContent(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
             onClick = {
-                if (typedCityText != null) {
-                    checkCity(typedCityText)
-                } else {
-                    onCityApply()
-                }
+                onCityApply()
             }
         ) {
             Text(
@@ -114,7 +110,7 @@ fun WelcomeContentPreview() {
                     name = "Ulyanovsk"
                 ),
             ),
-            checkCity = { },
+            setCityString = { },
             setCity = { },
             onCityApply = { }
         )

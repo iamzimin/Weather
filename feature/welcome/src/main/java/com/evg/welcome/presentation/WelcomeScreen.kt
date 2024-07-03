@@ -35,13 +35,19 @@ fun WelcomeScreen(
     val cities by viewModel.cityList.collectAsState()
     val isCityListLoading by viewModel.isCityListLoading.collectAsState()
 
-    val city by viewModel.city.collectAsState()
+    val city by viewModel.city.collectAsState(initial = null)
 
     if (!isInitialized) {
         LaunchedEffect(Unit) {
             viewModel.getCitiesList()
             isInitialized = true
         }
+    }
+
+    if (city != null) {
+        Toast.makeText(context, "Navigating to ${city?.name}", Toast.LENGTH_SHORT).show()
+        val id = city?.id ?: -1
+        navController.navigate("city/${id}")
     }
 
     Box(
@@ -64,27 +70,28 @@ fun WelcomeScreen(
             }
         } else {
             //TODO
-            if (city != null) {
+            /*if (city != null) {
                 Toast.makeText(context, "Navigating to ${city?.name}", Toast.LENGTH_SHORT).show()
                 val id = city?.id ?: -1
                 navController.navigate("city/${id}")
-            }
+            }*/
 
             WelcomeContent(
                 listCities = cities,
-                checkCity = { name ->
-                    viewModel.checkCity(name)
+                setCityString = { name ->
+                    viewModel.typedCityString.value = name
                 },
                 setCity = { newCity ->
-                    viewModel.setSelectedCity(newCity)
+                    viewModel.selectedCity.value = newCity
                 },
                 onCityApply = {
                     //TODO
-                     if (viewModel.city.value != null) {
+                    viewModel.navigateCity()
+                     /*if (viewModel.city.value != null) {
                         Toast.makeText(context, "Navigating to ${viewModel.city.value}", Toast.LENGTH_SHORT).show()
                          val id = city?.id ?: -1
                          navController.navigate("city/${id}")
-                    }
+                    }*/
                 }
             )
         }
