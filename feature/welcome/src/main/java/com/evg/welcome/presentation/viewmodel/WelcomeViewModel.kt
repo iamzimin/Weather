@@ -63,9 +63,6 @@ class WelcomeViewModel @Inject constructor(
         viewModelScope.launch {
             _city.value = city
         }
-        /*val editor = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE).edit()
-        editor.putBoolean("isCityDownloaded", true)
-        editor.apply()*/
     }
 
     private fun showToast(message: String) {

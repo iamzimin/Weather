@@ -6,7 +6,6 @@ import com.evg.selection_city.domain.mapper.toCityInfo
 import com.evg.selection_city.domain.model.City
 import com.evg.selection_city.domain.model.CityInfo
 import com.evg.selection_city.domain.repository.SelectionCityRepository
-import com.evg.selection_city.presentation.model.CityInfoUI
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

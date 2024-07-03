@@ -5,4 +5,5 @@ import javax.inject.Inject
 data class WeatherCityUseCases @Inject constructor(
     val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
     val getWeatherForWeekUseCase: GetWeatherForWeekUseCase,
+    val saveLatestCityUseCase: SaveLatestCityUseCase,
 )

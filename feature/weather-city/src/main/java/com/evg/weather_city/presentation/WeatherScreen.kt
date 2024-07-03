@@ -27,6 +27,7 @@ fun WeatherCityScreen(
         LaunchedEffect(cityId) {
             viewModel.getCurrentWeather(cityId)
             viewModel.getDailyWeather(cityId)
+            viewModel.saveCurrentLocationAsLatest(cityId)
             isInitialized = true
         }
     }

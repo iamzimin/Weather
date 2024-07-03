@@ -2,6 +2,7 @@ package com.evg.welcome.di
 
 import android.content.Context
 import com.evg.database.domain.repository.DatabaseRepository
+import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
 import com.evg.weather_api.domain.repository.WeatherApiRepository
 import com.evg.welcome.data.repository.WelcomeRepositoryImpl
 import com.evg.welcome.domain.repository.WelcomeRepository
@@ -22,12 +23,14 @@ object WelcomeModule {
         @ApplicationContext context: Context,
         weatherApiRepository: WeatherApiRepository,
         databaseRepository: DatabaseRepository,
+        sharedPrefsRepository: SharedPrefsRepository,
     ): WelcomeRepository {
         println("provided WelcomeRepositoryImpl")
         return WelcomeRepositoryImpl(
             context = context,
             weatherApiRepository = weatherApiRepository,
             databaseRepository = databaseRepository,
+            sharedPrefsRepository = sharedPrefsRepository,
         )
     }
 }

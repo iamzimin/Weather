@@ -6,5 +6,5 @@ data class SelectionCityUseCases @Inject constructor(
     val getCitiesListUseCase: GetCitiesListUseCase,
     val getCityByNameUseCase: GetCityByNameUseCase,
     val getMyCitiesListUseCase: GetMyCitiesListUseCase,
-    val deleteCityById: DeleteCityById,
+    val deleteCityByIdUseCase: DeleteCityByIdUseCase,
 )

@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":core:resource"))
     implementation(project(":core:weather-api"))
     implementation(project(":core:database"))
+    implementation(project(":core:shared-prefs"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

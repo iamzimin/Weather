@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":feature:welcome"))
     implementation(project(":feature:weather-city"))
     implementation(project(":feature:selection-city"))
+    implementation(project(":core:shared-prefs"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -51,4 +51,8 @@ class WeatherCityViewModel @Inject constructor(
                 }
         }
     }
+
+    fun saveCurrentLocationAsLatest(id: Int) {
+        weatherCityUseCases.saveLatestCityUseCase.invoke(id = id)
+    }
 }

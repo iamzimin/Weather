@@ -1,8 +1,5 @@
 package com.evg.weather
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,24 +15,23 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import androidx.navigation.navDeepLink
 import com.evg.resource.LocalNavHostController
 import com.evg.resource.theme.WeatherTheme
 import com.evg.selection_city.presentation.SelectionCityScreen
+import com.evg.shared_prefs.data.repository.SharedPrefsRepositoryImpl
 import com.evg.weather_city.presentation.WeatherCityScreen
 import com.evg.welcome.presentation.WelcomeScreen
 
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    val sharedPreferences = LocalContext.current.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-    val latestCity = sharedPreferences.getInt("latestCity", -1) //TODO
+    val sharedPreferencesRepository = SharedPrefsRepositoryImpl(context = LocalContext.current) //TODO
+    val latestCity = sharedPreferencesRepository.getLatestCity()
 
     CompositionLocalProvider(LocalNavHostController provides navController) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
         ) { paddingValues ->
-
             Box(
                 modifier = Modifier
                     .padding(paddingValues)
@@ -45,7 +41,7 @@ fun MainScreen() {
                     startDestination = "welcome"
                 ) {
                     composable("welcome") {
-                        if (latestCity != -1) {
+                        if (latestCity != null) {
                             WeatherCityScreen(
                                 cityId = latestCity
                             )

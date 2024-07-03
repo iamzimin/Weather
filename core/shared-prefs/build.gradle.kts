@@ -1,13 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kotlin.serializable)
-    alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.jetbrains.kotlin.ksp)
 }
 
 android {
-    namespace = "com.evg.weather_api"
+    namespace = "com.evg.shared_prefs"
     compileSdk = 34
 
     defaultConfig {
@@ -36,8 +34,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:database"))
-    implementation(project(":core:shared-prefs"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -45,11 +41,6 @@ dependencies {
     testImplementation(libs.junit.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    //Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    //implementation(libs.commons.compress)
 
     // Dagger Hilt
     implementation(libs.dagger.hilt)

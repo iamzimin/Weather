@@ -2,6 +2,7 @@ package com.evg.weather_api.di
 
 import android.content.Context
 import com.evg.database.domain.repository.DatabaseRepository
+import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
 import com.evg.weather_api.data.repository.WeatherApiRepositoryImpl
 import com.evg.weather_api.domain.repository.WeatherApiRepository
 import dagger.Module
@@ -46,7 +47,8 @@ object WeatherApiModule {
         @ApplicationContext context: Context,
         @Named("City") retrofitCity: Retrofit,
         @Named("Weather") retrofitWeather: Retrofit,
-        databaseRepository: DatabaseRepository
+        databaseRepository: DatabaseRepository,
+        sharedPrefsRepository: SharedPrefsRepository,
     ): WeatherApiRepository {
         println("provided WeatherApiRepositoryImpl")
         return WeatherApiRepositoryImpl(
@@ -54,6 +56,7 @@ object WeatherApiModule {
             retrofitCity = retrofitCity,
             retrofitWeather = retrofitWeather,
             databaseRepository = databaseRepository,
+            sharedPrefsRepository = sharedPrefsRepository,
         )
     }
 }

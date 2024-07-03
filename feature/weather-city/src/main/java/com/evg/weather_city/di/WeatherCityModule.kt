@@ -1,5 +1,6 @@
 package com.evg.weather_city.di
 
+import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
 import com.evg.weather_api.domain.repository.WeatherApiRepository
 import com.evg.weather_city.data.repository.WeatherCityRepositoryImpl
 import com.evg.weather_city.domain.repository.WeatherCityRepository
@@ -15,11 +16,13 @@ object WeatherCityModule {
     @Provides
     @Singleton
     fun provideWeatherCityRepository(
-        apiRepository: WeatherApiRepository
+        apiRepository: WeatherApiRepository,
+        sharedPrefsRepository: SharedPrefsRepository,
     ): WeatherCityRepository {
         println("provided provideWeatherCityRepository")
         return WeatherCityRepositoryImpl(
             apiRepository = apiRepository,
+            sharedPrefsRepository = sharedPrefsRepository,
         )
     }
 }

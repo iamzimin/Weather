@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface WeatherCityRepository {
     fun getCurrentWeather(cityId: Int): Flow<CurrentWeather?>
-    fun getWeatherForDay(cityId: Int): Flow<WeeklyForecast?>
     fun getWeatherForWeekUseCase(cityId: Int): Flow<WeeklyForecast?>
+    fun saveLatestCity(id: Int)
 }
