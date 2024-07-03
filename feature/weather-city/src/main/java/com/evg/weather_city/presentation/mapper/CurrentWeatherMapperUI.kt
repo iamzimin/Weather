@@ -9,6 +9,7 @@ import com.evg.weather_city.domain.model.CurrentWeatherRain
 import com.evg.weather_city.domain.model.CurrentWeatherSnow
 import com.evg.weather_city.domain.model.CurrentWeatherSys
 import com.evg.weather_city.domain.model.CurrentWeatherWind
+import com.evg.weather_city.domain.utils.kelvinToCelsius
 import com.evg.weather_city.presentation.model.CurrentWeatherCloudsUI
 import com.evg.weather_city.presentation.model.CurrentWeatherCoordinatesUI
 import com.evg.weather_city.presentation.model.CurrentWeatherInfoUI

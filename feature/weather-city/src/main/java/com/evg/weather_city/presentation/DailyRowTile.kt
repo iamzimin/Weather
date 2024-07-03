@@ -16,7 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.evg.resource.theme.WeatherTheme
-import com.evg.weather_city.presentation.mapper.timestampFormatToString
+import com.evg.weather_city.domain.utils.convertTimestampToDayOfWeek
+import com.evg.weather_city.domain.utils.timestampFormatToString
 import com.evg.weather_city.presentation.model.DailyForecastUI
 
 @Composable
@@ -30,11 +31,18 @@ fun DailyRowTile(
             .height(150.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = convertTimestampToDayOfWeek(
+                date = dailyForecastUI.timestamp,
+                timezoneOffsetSeconds = timezone,
+            ),
+            textAlign = TextAlign.Center,
+        )
 
-        ) {
         Text(
             text = dailyForecastUI.timestamp.timestampFormatToString(
-                pattern = "HH:mm",
+                pattern = "dd/MM",
                 timezone = timezone,
             ),
             textAlign = TextAlign.Center,
@@ -75,7 +83,7 @@ fun DailyRowTilePreview() {
     WeatherTheme {
         DailyRowTile(
             dailyForecastUI = DailyForecastUI(
-                timestamp = 1719942107,
+                timestamp = 1720066619,
                 icon = "",
                 weatherDescription = "Cloud",
                 tempMax = 20,

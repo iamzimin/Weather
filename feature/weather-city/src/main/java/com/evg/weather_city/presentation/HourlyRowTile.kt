@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.evg.resource.theme.WeatherTheme
-import com.evg.weather_city.presentation.mapper.timestampFormatToString
+import com.evg.weather_city.domain.utils.timestampFormatToString
 import com.evg.weather_city.presentation.model.HourlyForecastUI
 
 @Composable

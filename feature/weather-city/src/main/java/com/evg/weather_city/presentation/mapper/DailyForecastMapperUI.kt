@@ -2,6 +2,8 @@ package com.evg.weather_city.presentation.mapper
 
 import com.evg.weather_city.domain.model.WeeklyForecast
 import com.evg.weather_city.domain.model.WeeklyForecastWeather
+import com.evg.weather_city.domain.utils.isStartOfNewDay
+import com.evg.weather_city.domain.utils.kelvinToCelsius
 import com.evg.weather_city.presentation.model.DailyForecastUI
 import java.time.Instant
 import java.time.ZoneId
@@ -27,12 +29,6 @@ internal fun WeeklyForecast.toDailyForecastUI(): List<DailyForecastUI> {
     }
 
     return dailyForecasts
-}
-
-private fun isStartOfNewDay(previousDt: Long, currentDt: Long, timezoneOffsetSeconds: Int): Boolean {
-    val previousDay = ZonedDateTime.ofInstant(Instant.ofEpochSecond(previousDt), ZoneOffset.ofTotalSeconds(timezoneOffsetSeconds)).toLocalDate()
-    val currentDay = ZonedDateTime.ofInstant(Instant.ofEpochSecond(currentDt), ZoneOffset.ofTotalSeconds(timezoneOffsetSeconds)).toLocalDate()
-    return previousDay != currentDay
 }
 
 private fun mapToDailyForecast(forecasts: List<WeeklyForecastWeather>): DailyForecastUI {
