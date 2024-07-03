@@ -18,17 +18,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.evg.resource.ExposedCityMenu
 import com.evg.resource.theme.WeatherTheme
 import com.evg.welcome.domain.model.City
+import com.evg.welcome.presentation.mapper.toCity
+import com.evg.welcome.presentation.mapper.toCityUI
 
 @Composable
-fun WelcomeText(
+fun WelcomeContent(
     listCities: List<City>?,
     checkCity: (String?) -> Unit,
     setCity: (City?) -> Unit,
     onCityApply: () -> Unit,
 ) {
-    val context = LocalContext.current
     var typedCityText: String? by rememberSaveable { mutableStateOf(null) }
 
     Column(
@@ -53,10 +55,13 @@ fun WelcomeText(
         )
 
         ExposedCityMenu(
-            listCities = listCities,
-            onSelect = { city ->
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
+            listCities = listCities?.map { it.toCityUI() },
+            onSelect = { cityUI ->
                 typedCityText = null
-                setCity(city)
+                setCity(cityUI.toCity())
             },
             onEdit = { text ->
                 typedCityText = text
@@ -86,9 +91,9 @@ fun WelcomeText(
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 //@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun WelcomeTextPreview() {
+fun WelcomeContentPreview() {
     WeatherTheme {
-        WelcomeText(
+        WelcomeContent(
             listCities = listOf(
                 City(
                     id = 1,

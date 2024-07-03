@@ -43,6 +43,10 @@ class DatabaseRepositoryImpl(
         return currentWeatherDatabase.currentWeatherDao.getCurrentWeatherById(id = id)
     }
 
+    override suspend fun deleteCurrentWeatherById(id: Int) {
+        currentWeatherDatabase.currentWeatherDao.deleteCurrentWeatherById(id = id)
+    }
+
     // Weekly Forecast
     override suspend fun insertWeeklyForecast(weeklyForecast: WeeklyForecastDBO) {
         weeklyForecastDatabase.weeklyForecastDao.insertWeeklyForecast(weeklyForecast = weeklyForecast)
@@ -50,5 +54,9 @@ class DatabaseRepositoryImpl(
 
     override suspend fun getWeeklyForecastById(id: Int): WeeklyForecastDBO? {
         return weeklyForecastDatabase.weeklyForecastDao.getWeeklyForecastById(id = id)
+    }
+
+    override suspend fun deleteWeeklyForecastById(id: Int) {
+        weeklyForecastDatabase.weeklyForecastDao.deleteWeeklyForecastById(id = id)
     }
 }

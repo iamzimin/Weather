@@ -37,7 +37,7 @@ fun WeatherCityScreen(
         )
     } else {
         WeatherContent(
-            currentWeather = currentWeather!!,
+            currentWeather = currentWeather!!, //TODO
             hourlyWeather = hourlyWeather!!,
             dailyWeather = dailyWeather!!,
         )

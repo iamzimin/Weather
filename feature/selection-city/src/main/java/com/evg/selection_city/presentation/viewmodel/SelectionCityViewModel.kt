@@ -1,11 +1,12 @@
-package com.evg.welcome.presentation.viewmodel
+package com.evg.selection_city.presentation.viewmodel
 
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.evg.welcome.domain.model.City
-import com.evg.welcome.domain.usecase.WelcomeUseCases
+import com.evg.selection_city.domain.model.City
+import com.evg.selection_city.domain.model.CityInfo
+import com.evg.selection_city.domain.usecase.SelectionCityUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,9 +15,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WelcomeViewModel @Inject constructor(
+class SelectionCityViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val welcomeUseCases: WelcomeUseCases,
+    private val selectionCityUseCases: SelectionCityUseCases,
 ): ViewModel() {
     private val _cityList = MutableStateFlow<List<City>?>(null)
     val cityList: StateFlow<List<City>?> get() = _cityList
@@ -24,17 +25,28 @@ class WelcomeViewModel @Inject constructor(
     private val _isCityListLoading = MutableStateFlow(true)
     val isCityListLoading: StateFlow<Boolean> = _isCityListLoading
 
+    private val _myCityList = MutableStateFlow<List<CityInfo>?>(null)
+    val myCityList: StateFlow<List<CityInfo>?> get() = _myCityList
+
     private val _city = MutableStateFlow<City?>(null)
     val city: StateFlow<City?> get() = _city
-
 
     fun getCitiesList() {
         viewModelScope.launch {
             _isCityListLoading.value = true
-            welcomeUseCases.getCityListUseCase.invoke()
+            selectionCityUseCases.getCitiesListUseCase.invoke()
                 .collect { cities ->
                     _cityList.value = cities
                     _isCityListLoading.value = false
+                }
+        }
+    }
+
+    fun getMyCityList() {
+        viewModelScope.launch {
+            selectionCityUseCases.getMyCitiesListUseCase.invoke()
+                .collect { cities ->
+                    _myCityList.value = cities
                 }
         }
     }
@@ -47,7 +59,7 @@ class WelcomeViewModel @Inject constructor(
                 return@launch
             }
 
-            welcomeUseCases.getCityByNameUseCase.invoke(name = name)
+            selectionCityUseCases.getCityByNameUseCase.invoke(name = name)
                 .collect { city ->
                     if (city == null) {
                         showToast("City not found")
@@ -59,13 +71,10 @@ class WelcomeViewModel @Inject constructor(
         }
     }
 
-    fun setSelectedCity(city: City?) {
+    fun deleteCityById(id: Int) {
         viewModelScope.launch {
-            _city.value = city
+            selectionCityUseCases.deleteCityById.invoke(id = id)
         }
-        /*val editor = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE).edit()
-        editor.putBoolean("isCityDownloaded", true)
-        editor.apply()*/
     }
 
     private fun showToast(message: String) {

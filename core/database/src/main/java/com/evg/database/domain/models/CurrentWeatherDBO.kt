@@ -39,10 +39,10 @@ data class CurrentWeatherInfoDBO(
 
 @Serializable
 data class CurrentWeatherMainDBO(
-    val temp: Int,
-    val feelsLike: Int,
-    val tempMin: Int,
-    val tempMax: Int,
+    val temp: Double,
+    val feelsLike: Double,
+    val tempMin: Double,
+    val tempMax: Double,
     val pressure: Int,
     val humidity: Int,
     val seaLevel: Int,

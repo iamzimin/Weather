@@ -14,4 +14,7 @@ interface WeeklyForecastDao {
 
     @Query("SELECT * FROM weeklyforecastdbo WHERE id = :id")
     suspend fun getWeeklyForecastById(id: Int): WeeklyForecastDBO?
+
+    @Query("DELETE FROM weeklyforecastdbo WHERE id = :id")
+    suspend fun deleteWeeklyForecastById(id: Int)
 }

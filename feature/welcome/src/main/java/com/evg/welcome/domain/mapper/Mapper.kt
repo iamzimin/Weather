@@ -4,7 +4,7 @@ import com.evg.database.domain.models.CityDBO
 import com.evg.weather_api.domain.models.CityResponse
 import com.evg.welcome.domain.model.City
 
-fun CityResponse.toCity(): City {
+internal fun CityResponse.toCity(): City {
     return City(
         id = this.id,
         coordLon = this.coordinates.lon,
@@ -13,7 +13,7 @@ fun CityResponse.toCity(): City {
     )
 }
 
-fun CityDBO.toCity(): City {
+internal fun CityDBO.toCity(): City {
     return City(
         id = this.id,
         coordLon = this.coordLon,

@@ -21,6 +21,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.evg.resource.LocalNavHostController
 import com.evg.resource.theme.WeatherTheme
+import com.evg.selection_city.presentation.SelectionCityScreen
 import com.evg.weather_city.presentation.WeatherCityScreen
 import com.evg.welcome.presentation.WelcomeScreen
 
@@ -64,6 +65,12 @@ fun MainScreen() {
                         WeatherCityScreen(
                             cityId = id
                         )
+                    }
+
+                    composable(
+                        route = "cityList",
+                    ) {
+                        SelectionCityScreen()
                     }
                 }
             }

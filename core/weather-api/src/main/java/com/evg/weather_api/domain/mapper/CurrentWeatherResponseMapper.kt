@@ -39,10 +39,10 @@ fun CurrentWeatherInfoResponse.toCurrentWeatherInfoDBO(): CurrentWeatherInfoDBO 
 
 fun CurrentWeatherMainResponse.toCurrentWeatherMainDBO(): CurrentWeatherMainDBO {
     return CurrentWeatherMainDBO(
-        temp = this.temp.toInt(),
-        feelsLike = this.feelsLike.toInt(),
-        tempMin = this.tempMin.toInt(),
-        tempMax = this.tempMax.toInt(),
+        temp = this.temp,
+        feelsLike = this.feelsLike,
+        tempMin = this.tempMin,
+        tempMax = this.tempMax,
         pressure = this.pressure,
         humidity = this.humidity,
         seaLevel = this.seaLevel,

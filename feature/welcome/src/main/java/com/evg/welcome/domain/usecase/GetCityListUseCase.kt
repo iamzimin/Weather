@@ -5,7 +5,7 @@ import com.evg.welcome.domain.repository.WelcomeRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetCityList @Inject constructor(
+class GetCityListUseCase @Inject constructor(
     private val welcomeRepository: WelcomeRepository
 ) {
     suspend fun invoke(): Flow<List<City>?> {

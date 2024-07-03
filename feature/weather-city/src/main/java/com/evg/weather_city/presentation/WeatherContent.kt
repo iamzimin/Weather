@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.evg.resource.LocalNavHostController
 import com.evg.resource.R
 import com.evg.resource.theme.BorderRadius
 import com.evg.resource.theme.WeatherTheme
@@ -56,6 +57,7 @@ fun WeatherContent(
     hourlyWeather: List<HourlyForecastUI>,
     dailyWeather: List<DailyForecastUI>,
 ) {
+    val navController = LocalNavHostController.current
     val horizontalPadding = 30.dp
     val scrollState = rememberScrollState()
 
@@ -90,7 +92,9 @@ fun WeatherContent(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
                             .size(35.dp),
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            navController.navigate("cityList")
+                        },
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.location),

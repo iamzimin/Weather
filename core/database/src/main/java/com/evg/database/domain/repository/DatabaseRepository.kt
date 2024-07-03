@@ -15,8 +15,10 @@ interface DatabaseRepository {
     suspend fun getAllCurrentWeathers(): List<CurrentWeatherDBO>?
     suspend fun insertCurrentWeather(currentWeather: CurrentWeatherDBO)
     suspend fun getCurrentWeatherById(id: Int): CurrentWeatherDBO?
+    suspend fun deleteCurrentWeatherById(id: Int)
 
     // Weekly Forecast
     suspend fun insertWeeklyForecast(weeklyForecast: WeeklyForecastDBO)
     suspend fun getWeeklyForecastById(id: Int): WeeklyForecastDBO?
+    suspend fun deleteWeeklyForecastById(id: Int)
 }

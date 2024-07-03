@@ -16,4 +16,7 @@ interface CurrentWeatherDao {
 
     @Query("SELECT * FROM currentweatherdbo WHERE id = :id")
     suspend fun getCurrentWeatherById(id: Int): CurrentWeatherDBO?
+
+    @Query("DELETE FROM currentweatherdbo WHERE id = :id")
+    suspend fun deleteCurrentWeatherById(id: Int)
 }

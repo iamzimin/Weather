@@ -39,7 +39,7 @@ fun WelcomeScreen(
 
     if (!isInitialized) {
         LaunchedEffect(Unit) {
-            viewModel.getCityList()
+            viewModel.getCitiesList()
             isInitialized = true
         }
     }
@@ -70,7 +70,7 @@ fun WelcomeScreen(
                 navController.navigate("city/${id}")
             }
 
-            WelcomeText(
+            WelcomeContent(
                 listCities = cities,
                 checkCity = { name ->
                     viewModel.checkCity(name)
