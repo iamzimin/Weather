@@ -9,4 +9,5 @@ interface SelectionCityRepository {
     fun getCityByName(name: String): Flow<City?>
     suspend fun deleteCityById(id: Int)
     fun getMyCitesList(): Flow<List<CityInfo>?>
+    fun getLatestCity(): Int?
 }

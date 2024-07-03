@@ -35,6 +35,7 @@ import com.evg.selection_city.presentation.model.CityInfoUI
 @Composable
 fun CityInfoTile(
     cityInfo: CityInfoUI,
+    currentCityId: Int,
     deleteCity: (Int) -> Unit,
     isDeleteMode: Boolean,
 ) {
@@ -43,11 +44,10 @@ fun CityInfoTile(
     Box(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(BorderRadius))
-            .background(color = Color.Gray)
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
             .clickable {
                 navController.navigate("city/${cityInfo.id}")
             }
-
     ) {
         Column(
             modifier = Modifier
@@ -98,20 +98,22 @@ fun CityInfoTile(
 
                     Spacer(modifier = Modifier.weight(1f))
 
-                    IconButton(
-                        modifier = Modifier
-                            .size(70.dp),
-                        onClick = {
-                            deleteCity(cityInfo.id)
-                        }
-                    ) {
-                        Icon(
+                    if (currentCityId != cityInfo.id) {
+                        IconButton(
                             modifier = Modifier
-                                .size(40.dp),
-                            imageVector = Icons.Default.Delete,
-                            tint = MaterialTheme.colorScheme.inverseSurface,
-                            contentDescription = "Arrow back",
-                        )
+                                .size(70.dp),
+                            onClick = {
+                                deleteCity(cityInfo.id)
+                            }
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .size(40.dp),
+                                imageVector = Icons.Default.Delete,
+                                tint = MaterialTheme.colorScheme.inverseSurface,
+                                contentDescription = "Arrow back",
+                            )
+                        }
                     }
                 }
             }
@@ -133,8 +135,9 @@ fun CityInfoTilePreview() {
                 tempMax = 20,
                 tempMin = 15,
             ),
+            currentCityId = 2,
             deleteCity = { },
-            isDeleteMode = true
+            isDeleteMode = true,
         )
     }
 }

@@ -1,11 +1,5 @@
 package com.evg.weather_city.presentation.model
 
-import org.intellij.lang.annotations.Pattern
-import java.time.Instant
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-
 data class CurrentWeatherUI(
     //val coordinates: CurrentWeatherCoordinatesUI,
     val weather: List<CurrentWeatherInfoUI>,

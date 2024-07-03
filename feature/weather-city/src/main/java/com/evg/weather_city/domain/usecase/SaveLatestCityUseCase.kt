@@ -7,6 +7,6 @@ class SaveLatestCityUseCase @Inject constructor(
     private val weatherCityRepository: WeatherCityRepository
 ) {
     fun invoke(id: Int) {
-        return weatherCityRepository.saveLatestCity(id = id)
+        weatherCityRepository.saveLatestCity(id = id)
     }
 }

@@ -31,6 +31,9 @@ class SelectionCityViewModel @Inject constructor(
     private val _city = MutableStateFlow<City?>(null)
     val city: StateFlow<City?> get() = _city
 
+    private val _latestCityId = MutableStateFlow(selectionCityUseCases.getLatestCityUseCase.invoke() ?: -1)
+    val latestCityId: StateFlow<Int> get() = _latestCityId
+
     fun getCitiesList() {
         viewModelScope.launch {
             _isCityListLoading.value = true

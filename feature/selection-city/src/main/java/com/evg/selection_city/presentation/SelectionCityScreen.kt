@@ -25,6 +25,7 @@ fun SelectionCityScreen(
 
     val cities by viewModel.cityList.collectAsState()
     val myCities by viewModel.myCityList.collectAsState()
+    val latestCityId by viewModel.latestCityId.collectAsState()
     val isCityListLoading by viewModel.isCityListLoading.collectAsState()
 
     val city by viewModel.city.collectAsState()
@@ -51,6 +52,7 @@ fun SelectionCityScreen(
         SelectionCityContent(
             cityInfo = myCities!!, //TODO
             listCities = cities,
+            currentCityId = latestCityId,
             deleteCity = {
                 viewModel.deleteCityById(id = it)
             },

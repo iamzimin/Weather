@@ -3,9 +3,11 @@ package com.evg.weather_city.presentation
 import android.content.res.Configuration
 import android.graphics.drawable.Icon
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -21,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.evg.resource.R
 import com.evg.resource.theme.WeatherTheme
 import com.evg.weather_city.presentation.model.CurrentWeatherCloudsUI
@@ -39,12 +42,14 @@ fun DetailedInfoTile(
 ) {
     Column(
         modifier = modifier
+            .height(120.dp)
             .border(
                 width = 0.5.dp,
-                color = MaterialTheme.colorScheme.outline,
+                color = MaterialTheme.colorScheme.background,
                 shape = RectangleShape
             )
-            .padding(vertical = 20.dp, horizontal = 10.dp),
+            .padding(vertical = 20.dp, horizontal = 5.dp),
+        verticalArrangement = Arrangement.SpaceEvenly,
     ) {
         Box(
             modifier = Modifier
@@ -63,9 +68,12 @@ fun DetailedInfoTile(
 
         Text(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(top = 5.dp),
             text = title?: "",
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodySmall,
+            fontSize = 8.sp,
         )
         Text(
             modifier = Modifier

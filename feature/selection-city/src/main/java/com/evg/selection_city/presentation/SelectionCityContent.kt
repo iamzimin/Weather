@@ -43,6 +43,7 @@ import com.evg.selection_city.presentation.mapper.toCityUI
 fun SelectionCityContent(
     cityInfo: List<CityInfo>,
     listCities: List<City>?,
+    currentCityId: Int,
     deleteCity: (Int) -> Unit,
     checkCity: (String?) -> Unit,
     setCity: (City?) -> Unit,
@@ -118,6 +119,7 @@ fun SelectionCityContent(
                 ) { index ->
                     CityInfoTile(
                         cityInfo = cityInfo[index].toCityInfoUI(),
+                        currentCityId = currentCityId,
                         deleteCity = {
                             deleteCity(it)
                         },
@@ -180,6 +182,7 @@ fun SelectionCityContentPreview() {
                 )
             },
             listCities = emptyList(),
+            currentCityId = -1,
             deleteCity = { },
             checkCity = { },
             setCity = { },

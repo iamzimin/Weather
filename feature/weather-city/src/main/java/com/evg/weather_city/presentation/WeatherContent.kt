@@ -42,6 +42,7 @@ import com.evg.resource.LocalNavHostController
 import com.evg.resource.R
 import com.evg.resource.theme.BorderRadius
 import com.evg.resource.theme.WeatherTheme
+import com.evg.weather_city.domain.utils.timestampFormatToString
 import com.evg.weather_city.presentation.model.CurrentWeatherCloudsUI
 import com.evg.weather_city.presentation.model.CurrentWeatherInfoUI
 import com.evg.weather_city.presentation.model.CurrentWeatherMainUI
@@ -81,8 +82,12 @@ fun WeatherContent(
                         .padding(top = 10.dp),
                     contentAlignment = Alignment.Center
                 ) {
+                    val updateTime = currentWeather.timestamp.timestampFormatToString(
+                        pattern = "HH:mm",
+                        timezone = currentWeather.timezone,
+                    )
                     Text(
-                        text = "Updated: 23:21",
+                        text = "Updated: $updateTime",
                         modifier = Modifier
                             .padding(horizontal = horizontalPadding),
                         style = MaterialTheme.typography.bodySmall
@@ -149,7 +154,7 @@ fun WeatherContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(BorderRadius))
-                .background(color = Color.Gray)
+                .background(color = MaterialTheme.colorScheme.primaryContainer)
         ) {
             LazyRow {
                 items(
@@ -169,7 +174,7 @@ fun WeatherContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(BorderRadius))
-                .background(color = Color.Gray)
+                .background(color = MaterialTheme.colorScheme.primaryContainer)
         ) {
             LazyRow {
                 items(
@@ -194,71 +199,77 @@ fun WeatherContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(BorderRadius))
-                .background(color = Color.Gray)
-                .border(
-                    width = 1.dp,
-                    color = Color.Gray,
+                .background(color = MaterialTheme.colorScheme.primaryContainer)
+                /*.border(
+                    width = 0.5.dp,
+                    color = MaterialTheme.colorScheme.background,
                     shape = MaterialTheme.shapes.medium
-                )
+                )*/
         ) {
             Row {
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.location),
-                    title = "dfsfs",
-                    info = "sdfsd",
+                    title = "Feels like",
+                    info = currentWeather.main.feelsLike.toString(),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.location),
-                    title = "dfsfs",
-                    info = "sdfsd",
+                    title = "Pressure",
+                    info = currentWeather.main.pressure.toString(),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.location),
-                    title = "dfsfs",
-                    info = "sdfsd",
+                    title = "Humidity",
+                    info = currentWeather.main.humidity.toString(),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.location),
-                    title = "dfsfs",
-                    info = "sdfsd",
-                )
-            }
-            Row {
-                DetailedInfoTile(
-                    modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
-                    title = "dfsfs",
-                    info = "sdfsd",
-                )
-                DetailedInfoTile(
-                    modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
-                    title = "dfsfs",
-                    info = "sdfsd",
-                )
-                DetailedInfoTile(
-                    modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
-                    title = "dfsfs",
-                    info = "sdfsd",
-                )
-                DetailedInfoTile(
-                    modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
-                    title = "dfsfs",
-                    info = "sdfsd",
+                    title = "Sea level",
+                    info = currentWeather.main.seaLevel.toString(),
                 )
             }
             Row {
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.location),
-                    title = "dfsfs",
-                    info = "sdfsd",
+                    title = "Wind speed",
+                    info = currentWeather.wind.speed.toString(),
+                )
+                DetailedInfoTile(
+                    modifier = Modifier.weight(1f),
+                    icon = painterResource(id = R.drawable.location),
+                    title = "Wind Direction",
+                    info = currentWeather.wind.deg.toString(),
+                )
+                DetailedInfoTile(
+                    modifier = Modifier.weight(1f),
+                    icon = painterResource(id = R.drawable.location),
+                    title = "Cloudiness",
+                    info = currentWeather.clouds.cloudiness.toString(),
+                )
+                DetailedInfoTile(
+                    modifier = Modifier.weight(1f),
+                    icon = painterResource(id = R.drawable.location),
+                    title = "Sunrise",
+                    info = currentWeather.sys.sunrise.timestampFormatToString(
+                        pattern = "HH:mm",
+                        timezone = currentWeather.timezone,
+                    ),
+                )
+            }
+            Row {
+                DetailedInfoTile(
+                    modifier = Modifier.weight(1f),
+                    icon = painterResource(id = R.drawable.location),
+                    title = "Sunset",
+                    info = currentWeather.sys.sunset.timestampFormatToString(
+                        pattern = "HH:mm",
+                        timezone = currentWeather.timezone,
+                    ),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
@@ -278,7 +289,7 @@ fun WeatherContent(
 
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun WeatherContentPreview() {
     WeatherTheme {
         WeatherContent(
