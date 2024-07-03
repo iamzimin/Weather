@@ -1,14 +1,14 @@
 package com.evg.weather_city.domain.model
 
 data class CurrentWeather(
-    val coordinates: CurrentWeatherCoordinates,
+    //val coordinates: CurrentWeatherCoordinates,
     val weather: List<CurrentWeatherInfo>,
     // val base: String, // Internal parameter
     val main: CurrentWeatherMain,
     val visibility: Int, // Visibility, meter. The maximum value of the visibility is 10 km
     val wind: CurrentWeatherWind,
-    val rain: CurrentWeatherRain?,
-    val snow: CurrentWeatherSnow?,
+    //val rain: CurrentWeatherRain?,
+    //val snow: CurrentWeatherSnow?,
     val clouds: CurrentWeatherClouds,
     val timestamp: Long, // Time of data calculation, unix, UTC
     val sys: CurrentWeatherSys,
@@ -19,10 +19,10 @@ data class CurrentWeather(
 )
 
 
-data class CurrentWeatherCoordinates(
+/*data class CurrentWeatherCoordinates(
     val lon: Double, // Longitude of the location
     val lat: Double // Latitude of the location
-)
+)*/
 
 data class CurrentWeatherInfo(
     val id: Int, // Weather condition id
@@ -48,7 +48,7 @@ data class CurrentWeatherWind(
     val gust: Double // Wind gust. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour
 )
 
-data class CurrentWeatherRain(
+/*data class CurrentWeatherRain(
     val oneHour: Double, // Rain volume for the last 1 hour, mm. Please note that only mm as units of measurement are available for this parameter
     val threeHour: Double, // Rain volume for the last 3 hours, mm. Please note that only mm as units of measurement are available for this parameter
 )
@@ -56,7 +56,7 @@ data class CurrentWeatherRain(
 data class CurrentWeatherSnow(
     val oneHour: Double, // Snow volume for the last 1 hour, mm. Please note that only mm as units of measurement are available for this parameter
     val threeHour: Double, // Snow volume for the last 3 hour, mm. Please note that only mm as units of measurement are available for this parameter
-)
+)*/
 
 data class CurrentWeatherClouds(
     val cloudiness: Int // Cloudiness, %

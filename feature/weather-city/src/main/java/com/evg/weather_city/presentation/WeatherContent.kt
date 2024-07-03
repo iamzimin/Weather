@@ -42,11 +42,8 @@ import com.evg.resource.R
 import com.evg.resource.theme.BorderRadius
 import com.evg.resource.theme.WeatherTheme
 import com.evg.weather_city.presentation.model.CurrentWeatherCloudsUI
-import com.evg.weather_city.presentation.model.CurrentWeatherCoordinatesUI
 import com.evg.weather_city.presentation.model.CurrentWeatherInfoUI
 import com.evg.weather_city.presentation.model.CurrentWeatherMainUI
-import com.evg.weather_city.presentation.model.CurrentWeatherRainUI
-import com.evg.weather_city.presentation.model.CurrentWeatherSnowUI
 import com.evg.weather_city.presentation.model.CurrentWeatherSysUI
 import com.evg.weather_city.presentation.model.CurrentWeatherUI
 import com.evg.weather_city.presentation.model.CurrentWeatherWindUI
@@ -282,7 +279,7 @@ fun WeatherContentPreview() {
     WeatherTheme {
         WeatherContent(
             currentWeather = CurrentWeatherUI(
-                coordinates = CurrentWeatherCoordinatesUI(lon = 34.56, lat = -78.9),
+                //coordinates = CurrentWeatherCoordinatesUI(lon = 34.56, lat = -78.9),
                 weather = listOf(
                     CurrentWeatherInfoUI(id = 800, main = "Clear", description = "clear sky", icon = "01d")
                 ),
@@ -292,8 +289,8 @@ fun WeatherContentPreview() {
                 ),
                 visibility = 10000,
                 wind = CurrentWeatherWindUI(speed = 3.5, deg = 180, gust = 4.2),
-                rain = CurrentWeatherRainUI(oneHour = 0.0, threeHour = 0.0),
-                snow = CurrentWeatherSnowUI(oneHour = 0.0, threeHour = 0.0),
+                //rain = CurrentWeatherRainUI(oneHour = 0.0, threeHour = 0.0),
+                //snow = CurrentWeatherSnowUI(oneHour = 0.0, threeHour = 0.0),
                 clouds = CurrentWeatherCloudsUI(cloudiness = 10),
                 timestamp = System.currentTimeMillis() / 1000,
                 sys = CurrentWeatherSysUI(country = "US", sunrise = 1625222257, sunset = 1625273893),

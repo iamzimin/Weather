@@ -11,23 +11,20 @@ import com.evg.weather_api.domain.models.CurrentWeatherSysResponse
 import com.evg.weather_api.domain.models.CurrentWeatherWindResponse
 import com.evg.weather_city.domain.model.CurrentWeather
 import com.evg.weather_city.domain.model.CurrentWeatherClouds
-import com.evg.weather_city.domain.model.CurrentWeatherCoordinates
 import com.evg.weather_city.domain.model.CurrentWeatherInfo
 import com.evg.weather_city.domain.model.CurrentWeatherMain
-import com.evg.weather_city.domain.model.CurrentWeatherRain
-import com.evg.weather_city.domain.model.CurrentWeatherSnow
 import com.evg.weather_city.domain.model.CurrentWeatherSys
 import com.evg.weather_city.domain.model.CurrentWeatherWind
 
 internal fun CurrentWeatherResponse.toCurrentWeather(): CurrentWeather {
     return CurrentWeather(
-        coordinates = coordinates.toCurrentWeatherCoordinates(),
+        //coordinates = coordinates.toCurrentWeatherCoordinates(),
         weather = weather.map { it.toCurrentWeatherInfo() },
         main = main.toCurrentWeatherMain(),
         visibility = visibility,
         wind = wind.toCurrentWeatherWind(),
-        rain = rain?.toCurrentWeatherRain(),
-        snow = snow?.toCurrentWeatherSnow(),
+        //rain = rain?.toCurrentWeatherRain(),
+        //snow = snow?.toCurrentWeatherSnow(),
         clouds = clouds.toCurrentWeatherClouds(),
         timestamp = timestamp,
         sys = sys.toCurrentWeatherSys(),
@@ -37,12 +34,12 @@ internal fun CurrentWeatherResponse.toCurrentWeather(): CurrentWeather {
     )
 }
 
-internal fun CurrentWeatherCoordinatesResponse.toCurrentWeatherCoordinates(): CurrentWeatherCoordinates {
+/*internal fun CurrentWeatherCoordinatesResponse.toCurrentWeatherCoordinates(): CurrentWeatherCoordinates {
     return CurrentWeatherCoordinates(
         lon = lon,
         lat = lat
     )
-}
+}*/
 
 internal fun CurrentWeatherInfoResponse.toCurrentWeatherInfo(): CurrentWeatherInfo {
     return CurrentWeatherInfo(
@@ -74,7 +71,7 @@ internal fun CurrentWeatherWindResponse.toCurrentWeatherWind(): CurrentWeatherWi
     )
 }
 
-internal fun CurrentWeatherRainResponse.toCurrentWeatherRain(): CurrentWeatherRain {
+/*internal fun CurrentWeatherRainResponse.toCurrentWeatherRain(): CurrentWeatherRain {
     return CurrentWeatherRain(
         oneHour = oneHour,
         threeHour = threeHour
@@ -86,7 +83,7 @@ internal fun CurrentWeatherSnowResponse.toCurrentWeatherSnow(): CurrentWeatherSn
         oneHour = oneHour,
         threeHour = threeHour
     )
-}
+}*/
 
 internal fun CurrentWeatherCloudsResponse.toCurrentWeatherClouds(): CurrentWeatherClouds {
     return CurrentWeatherClouds(

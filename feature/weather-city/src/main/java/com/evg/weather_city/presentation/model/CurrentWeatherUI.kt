@@ -7,14 +7,14 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 data class CurrentWeatherUI(
-    val coordinates: CurrentWeatherCoordinatesUI,
+    //val coordinates: CurrentWeatherCoordinatesUI,
     val weather: List<CurrentWeatherInfoUI>,
     // val base: String,
     val main: CurrentWeatherMainUI,
     val visibility: Int, 
     val wind: CurrentWeatherWindUI,
-    val rain: CurrentWeatherRainUI?,
-    val snow: CurrentWeatherSnowUI?,
+    //val rain: CurrentWeatherRainUI?,
+    //val snow: CurrentWeatherSnowUI?,
     val clouds: CurrentWeatherCloudsUI,
     val timestamp: Long, 
     val sys: CurrentWeatherSysUI,
@@ -24,10 +24,10 @@ data class CurrentWeatherUI(
     // val cod: Int
 )
 
-data class CurrentWeatherCoordinatesUI(
+/*data class CurrentWeatherCoordinatesUI(
     val lon: Double, 
     val lat: Double 
-)
+)*/
 
 data class CurrentWeatherInfoUI(
     val id: Int, 
@@ -53,7 +53,7 @@ data class CurrentWeatherWindUI(
     val gust: Double 
 )
 
-data class CurrentWeatherRainUI(
+/*data class CurrentWeatherRainUI(
     val oneHour: Double, 
     val threeHour: Double, 
 )
@@ -61,7 +61,7 @@ data class CurrentWeatherRainUI(
 data class CurrentWeatherSnowUI(
     val oneHour: Double, 
     val threeHour: Double, 
-)
+)*/
 
 data class CurrentWeatherCloudsUI(
     val cloudiness: Int 

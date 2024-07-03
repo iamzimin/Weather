@@ -3,6 +3,8 @@ package com.evg.weather_api.data.repository
 import android.content.Context
 import com.evg.database.domain.repository.DatabaseRepository
 import com.evg.weather_api.domain.mapper.toCityDBO
+import com.evg.weather_api.domain.mapper.toCurrentWeatherDBO
+import com.evg.weather_api.domain.mapper.toWeeklyForecastDBO
 import com.evg.weather_api.domain.models.CityResponse
 import com.evg.weather_api.domain.models.CurrentWeatherResponse
 import com.evg.weather_api.domain.models.WeeklyForecastResponse
@@ -75,6 +77,15 @@ class WeatherApiRepositoryImpl(
                 cityId = cityId,
                 apiKey = weatherApiKey,
             )
+
+            val weatherDBO = weather?.toCurrentWeatherDBO()
+            weatherDBO?.let {
+                databaseRepository.insertCurrentWeather(
+                    currentWeather = it
+                )
+            }
+
+            val test = 5
             return weather
         } catch (e: Exception) {
             null
@@ -87,6 +98,15 @@ class WeatherApiRepositoryImpl(
                 cityId = cityId,
                 apiKey = weatherApiKey,
             )
+
+            val weatherDBO = weather?.toWeeklyForecastDBO()
+            weatherDBO?.let {
+                databaseRepository.insertWeeklyForecast(
+                    weeklyForecast = it
+                )
+            }
+
+            val test = 5
             return weather
         } catch (e: Exception) {
             null

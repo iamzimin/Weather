@@ -41,13 +41,11 @@ private fun mapToDailyForecast(forecasts: List<WeeklyForecastWeather>): DailyFor
     val mainCount = mutableMapOf<String, Int>()
 
     forecasts.forEach { forecast ->
-        forecast.weather.forEach { weatherInfo ->
-            val iconKey = weatherInfo.icon.takeWhile { it.isDigit() }
-            iconCount[iconKey] = (iconCount[iconKey] ?: 0) + 1
+        val iconKey = forecast.weatherIcon.takeWhile { it.isDigit() }
+        iconCount[iconKey] = (iconCount[iconKey] ?: 0) + 1
 
-            val mainKey = weatherInfo.main
-            mainCount[mainKey] = (mainCount[mainKey] ?: 0) + 1
-        }
+        val mainKey = forecast.weatherMain
+        mainCount[mainKey] = (mainCount[mainKey] ?: 0) + 1
     }
 
     val mostFrequentIconDigits = iconCount.maxByOrNull { it.value }?.key

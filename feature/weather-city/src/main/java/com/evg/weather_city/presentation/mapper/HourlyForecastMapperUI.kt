@@ -9,7 +9,7 @@ fun WeeklyForecast.toHourlyForecastUI(size: Int): List<HourlyForecastUI> {
         HourlyForecastUI(
             timestamp = weather.dt,
             temp = weather.main.temp.kelvinToCelsius(),
-            icon = weather.weather.firstOrNull()?.icon ?: ""
+            icon = weather.weatherIcon
         )
     }
 }
