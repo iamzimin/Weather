@@ -1,6 +1,7 @@
 package com.evg.selection_city.presentation
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,31 +12,46 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.evg.resource.ExposedCityMenu
+import com.evg.resource.LocalNavHostController
 import com.evg.resource.R
 import com.evg.resource.theme.WeatherTheme
 import com.evg.selection_city.domain.model.City
 import com.evg.selection_city.domain.model.CityInfo
+import com.evg.selection_city.presentation.mapper.toCity
 import com.evg.selection_city.presentation.mapper.toCityInfoUI
 import com.evg.selection_city.presentation.mapper.toCityUI
-import com.evg.selection_city.presentation.model.CityInfoUI
 
 @Composable
 fun SelectionCityContent(
     cityInfo: List<CityInfo>,
     listCities: List<City>?,
+    deleteCity: (Int) -> Unit,
+    checkCity: (String?) -> Unit,
+    setCity: (City?) -> Unit,
+    onCityApply: () -> Unit,
 ) {
+    val navController = LocalNavHostController.current
+    var typedCityText: String? by rememberSaveable { mutableStateOf(null) }
+    var isDeleteMode: Boolean by rememberSaveable { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -46,13 +62,27 @@ fun SelectionCityContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
-                    onClick = { /*TODO*/ }
+                    onClick = {
+                        if (isDeleteMode) {
+                            isDeleteMode = false
+                        } else {
+                            navController.popBackStack()
+                        }
+                    }
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.arrow_back),
-                        tint = MaterialTheme.colorScheme.inverseSurface,
-                        contentDescription = "Filter",
-                    )
+                    if (isDeleteMode) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            tint = MaterialTheme.colorScheme.inverseSurface,
+                            contentDescription = "Arrow back",
+                        )
+                    } else {
+                        Icon(
+                            painter = painterResource(id = R.drawable.arrow_back),
+                            tint = MaterialTheme.colorScheme.inverseSurface,
+                            contentDescription = "Arrow back",
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
@@ -69,15 +99,18 @@ fun SelectionCityContent(
                     ),
                 listCities = listCities?.map { it.toCityUI() },
                 onSelect = { cityUI ->
-                    //typedCityText = null
-                    //setCity(city.toCity())
+                    typedCityText = null
+                    setCity(cityUI.toCity())
                 },
                 onEdit = { text ->
-                    //typedCityText = text
+                    typedCityText = text
                 }
             )
 
             LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
                 verticalArrangement = Arrangement.spacedBy(7.dp)
             ) {
                 items(
@@ -85,33 +118,48 @@ fun SelectionCityContent(
                 ) { index ->
                     CityInfoTile(
                         cityInfo = cityInfo[index].toCityInfoUI(),
+                        deleteCity = {
+                            deleteCity(it)
+                        },
+                        isDeleteMode = isDeleteMode,
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.weight(1f))
-
-            Row(
-                modifier = Modifier
-                    .padding(top = 15.dp)
-            ) {
-                Button(
-                    modifier = Modifier.weight(1f),
-                    onClick = { /*TODO*/ }
+            if (!isDeleteMode) {
+                Row(
+                    modifier = Modifier
+                        //.align(Alignment.BottomCenter)
+                        .background(color = MaterialTheme.colorScheme.background)
+                        .padding(top = 5.dp)
                 ) {
-                    Text(text = "Add city")
-                }
+                    Button(
+                        modifier = Modifier.weight(1f),
+                        onClick = {
+                            if (typedCityText != null) {
+                                checkCity(typedCityText)
+                            } else {
+                                onCityApply()
+                            }
+                        }
+                    ) {
+                        Text(text = "Add city")
+                    }
 
-                Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
 
-                Button(
-                    modifier = Modifier.weight(1f),
-                    onClick = { /*TODO*/ }
-                ) {
-                    Text(text = "Remove city")
+                    Button(
+                        modifier = Modifier.weight(1f),
+                        onClick = {
+                            isDeleteMode = !isDeleteMode
+                        }
+                    ) {
+                        Text(text = "Remove city")
+                    }
                 }
             }
         }
+
     }
 }
 
@@ -121,17 +169,21 @@ fun SelectionCityContent(
 fun SelectionCityContentPreview() {
     WeatherTheme {
         SelectionCityContent(
-            cityInfo = List(4) {
+            cityInfo = List(8) {
                 CityInfo(
                     id = it,
                     city = "Paris",
                     skyDescription = "Sunny",
-                    temp = 17.5,
-                    tempMax = 20.5,
-                    tempMin = 15.2,
+                    temp = 205.4,
+                    tempMax = 211.4,
+                    tempMin = 200.4,
                 )
             },
-            listCities = emptyList()
+            listCities = emptyList(),
+            deleteCity = { },
+            checkCity = { },
+            setCity = { },
+            onCityApply = { },
         )
     }
 }

@@ -75,8 +75,8 @@ fun WelcomeScreen(
                 checkCity = { name ->
                     viewModel.checkCity(name)
                 },
-                setCity = { city ->
-                    viewModel.setSelectedCity(city)
+                setCity = { newCity ->
+                    viewModel.setSelectedCity(newCity)
                 },
                 onCityApply = {
                     //TODO

@@ -46,7 +46,9 @@ fun MainScreen() {
                 ) {
                     composable("welcome") {
                         if (latestCity != -1) {
-                            WelcomeScreen()
+                            WeatherCityScreen(
+                                cityId = latestCity
+                            )
                         } else {
                             WelcomeScreen()
                         }

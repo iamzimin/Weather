@@ -71,9 +71,19 @@ class SelectionCityViewModel @Inject constructor(
         }
     }
 
+    fun setSelectedCity(city: City?) {
+        viewModelScope.launch {
+            _city.value = city
+        }
+        /*val editor = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE).edit()
+        editor.putBoolean("isCityDownloaded", true)
+        editor.apply()*/
+    }
+
     fun deleteCityById(id: Int) {
         viewModelScope.launch {
             selectionCityUseCases.deleteCityById.invoke(id = id)
+            _myCityList.value = _myCityList.value?.filter { it.id != id }
         }
     }
 
