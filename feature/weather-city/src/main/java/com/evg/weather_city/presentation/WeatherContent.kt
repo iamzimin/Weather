@@ -191,11 +191,11 @@ fun WeatherContent(
             }
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
         Text(
             text = "More detailed",
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleLarge,
         )
         Spacer(modifier = Modifier.height(3.dp))
         Column(

@@ -66,7 +66,7 @@ fun WelcomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = "Loading a list of cities"
+                    text = "Updating a list of cities"
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 CircularProgressIndicator(
@@ -83,7 +83,7 @@ fun WelcomeScreen(
                     viewModel.selectedCity.value = newCity
                 },
                 onCityApply = {
-                    viewModel.navigateCity()
+                    viewModel.navigateCity(context = context)
                 }
             )
         }
@@ -92,7 +92,7 @@ fun WelcomeScreen(
 
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun CharacterFilterDialogPreview() {
     WeatherTheme {
         WelcomeScreen()

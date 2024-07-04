@@ -34,6 +34,7 @@ fun ExposedCityMenu(
     listCities: List<CityUI>?,
     onSelect: (CityUI) -> Unit,
     onEdit: (String) -> Unit,
+    isEnabled: Boolean = true,
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     var selectedText by rememberSaveable { mutableStateOf("") }
@@ -41,7 +42,11 @@ fun ExposedCityMenu(
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {
-            expanded = !expanded
+            expanded = if (isEnabled) {
+                !expanded
+            } else {
+                false
+            }
         },
     ) {
         OutlinedTextField(
@@ -54,6 +59,7 @@ fun ExposedCityMenu(
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             modifier = modifier
                 .menuAnchor(),
+            enabled = isEnabled,
         )
 
         listCities?.let { cities ->

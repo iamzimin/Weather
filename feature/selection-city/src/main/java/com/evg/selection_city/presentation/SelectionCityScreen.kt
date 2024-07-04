@@ -62,7 +62,7 @@ fun SelectionCityScreen(
                     viewModel.selectedCity.value = newCity
                 },
                 onCityApply = {
-                    viewModel.navigateCity()
+                    viewModel.navigateCity(context = context)
                 }
             )
         }

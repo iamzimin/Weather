@@ -17,6 +17,6 @@ interface CityDao {
     @Query("SELECT * FROM citydbo WHERE id = :id")
     suspend fun getCityById(id: Int): CityDBO?
 
-    @Query("SELECT * FROM citydbo WHERE name = :name LIMIT 1")
+    @Query("SELECT * FROM citydbo WHERE LOWER(name) = LOWER(:name) LIMIT 1")
     suspend fun getCityByName(name: String): CityDBO?
 }

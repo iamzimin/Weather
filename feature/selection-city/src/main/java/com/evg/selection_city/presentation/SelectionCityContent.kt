@@ -106,7 +106,8 @@ fun SelectionCityContent(
                 onEdit = { text ->
                     setCity(null)
                     setCityString(text)
-                }
+                },
+                isEnabled = !isDeleteMode
             )
 
             LazyColumn(
@@ -164,7 +165,7 @@ fun SelectionCityContent(
 
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun SelectionCityContentPreview() {
     WeatherTheme {
         SelectionCityContent(

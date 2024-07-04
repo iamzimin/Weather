@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val welcomeUseCases: WelcomeUseCases,
 ): ViewModel() {
     private val _cityList = MutableStateFlow<List<City>?>(null)
@@ -33,7 +32,7 @@ class WelcomeViewModel @Inject constructor(
     val selectedCity = MutableStateFlow<City?>(null)
 
 
-    fun navigateCity() {
+    fun navigateCity(context: Context) {
         viewModelScope.launch {
             if (typedCityString.value != null) {
                 typedCityString.value?.let {

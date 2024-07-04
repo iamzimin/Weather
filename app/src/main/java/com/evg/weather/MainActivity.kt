@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun GreetingPreview() {
     WeatherTheme {
         MainScreen()
