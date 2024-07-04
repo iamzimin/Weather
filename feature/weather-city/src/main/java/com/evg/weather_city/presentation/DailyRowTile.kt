@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,25 +50,30 @@ fun DailyRowTile(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = convertTimestampToDayOfWeek(
-                date = dailyForecastUI.timestamp,
-                timezoneOffsetSeconds = timezone,
-            ),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            textAlign = TextAlign.Center,
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = convertTimestampToDayOfWeek(
+                    date = dailyForecastUI.timestamp,
+                    timezoneOffsetSeconds = timezone,
+                ),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
+            )
 
-        Text(
-            text = dailyForecastUI.timestamp.timestampFormatToString(
-                pattern = "dd/MM",
-                timezone = timezone,
-            ),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            textAlign = TextAlign.Center,
-        )
+            Text(
+                text = dailyForecastUI.timestamp.timestampFormatToString(
+                    pattern = "dd/MM",
+                    timezone = timezone,
+                ),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
 
 
         SubcomposeAsyncImage(
@@ -106,20 +112,24 @@ fun DailyRowTile(
             },
         )
 
-        Text(
-            text = dailyForecastUI.weatherDescription,
-            textAlign = TextAlign.Center,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = dailyForecastUI.weatherDescription,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.bodyMedium,
+            )
 
-        Text(
-            text = "${dailyForecastUI.tempMax}/${dailyForecastUI.tempMin}°C",
-            textAlign = TextAlign.Center,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-
+            Text(
+                text = "${dailyForecastUI.tempMax}/${dailyForecastUI.tempMin}°C",
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
     }
 }
 

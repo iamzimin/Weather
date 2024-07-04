@@ -17,11 +17,14 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.evg.resource.model.CityUI
@@ -37,7 +40,7 @@ fun ExposedCityMenu(
     isEnabled: Boolean = true,
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
-    var selectedText by rememberSaveable { mutableStateOf("") }
+    var selectedText by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue("")) }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -53,20 +56,21 @@ fun ExposedCityMenu(
             value = selectedText,
             onValueChange = { newText ->
                 selectedText = newText
-                onEdit(newText)
+                onEdit(newText.text)
             },
             label = { Text(text = "City") },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             modifier = modifier
                 .menuAnchor(),
             enabled = isEnabled,
+            singleLine = true,
         )
 
         listCities?.let { cities ->
-            if (selectedText.length < 3 && listCities.size > 100) return@ExposedDropdownMenuBox
+            if (selectedText.text.length < 3 && listCities.size > 50) return@ExposedDropdownMenuBox
 
             val filteredOptions =
-                cities.filter { it.name.contains(selectedText, ignoreCase = true) }
+                cities.filter { it.name.contains(selectedText.text, ignoreCase = true) }
             if (filteredOptions.isNotEmpty()) {
                 ExposedDropdownMenu(
                     expanded = expanded,
@@ -76,7 +80,7 @@ fun ExposedCityMenu(
                         DropdownMenuItem(
                             text = { Text(text = item.name) },
                             onClick = {
-                                selectedText = item.name
+                                selectedText = TextFieldValue(text = item.name, selection = TextRange(item.name.length))
                                 expanded = false
                                 onSelect(item)
                             }

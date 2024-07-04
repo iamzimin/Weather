@@ -1,6 +1,10 @@
 package com.evg.weather_city.presentation
 
 import android.content.res.Configuration
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,12 +25,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,6 +51,8 @@ import com.evg.weather_city.presentation.model.CurrentWeatherUI
 import com.evg.weather_city.presentation.model.CurrentWeatherWindUI
 import com.evg.weather_city.presentation.model.DailyForecastUI
 import com.evg.weather_city.presentation.model.HourlyForecastUI
+import kotlinx.coroutines.delay
+import java.util.TimeZone
 
 @Composable
 fun WeatherContent(
@@ -54,6 +63,12 @@ fun WeatherContent(
     val navController = LocalNavHostController.current
     val horizontalPadding = 30.dp
     val scrollState = rememberScrollState()
+    var isUpdateTextVisible by remember { mutableStateOf(true) }
+
+    LaunchedEffect(Unit) {
+        delay(3000)
+        isUpdateTextVisible = false
+    }
 
     Column(
         modifier = Modifier
@@ -77,14 +92,19 @@ fun WeatherContent(
                 ) {
                     val updateTime = currentWeather.timestamp.timestampFormatToString(
                         pattern = "HH:mm",
-                        timezone = currentWeather.timezone,
+                        timezone = TimeZone.getDefault().rawOffset / 1000,
                     )
-                    Text(
-                        text = "Updated: $updateTime",
-                        modifier = Modifier
-                            .padding(horizontal = horizontalPadding),
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                    androidx.compose.animation.AnimatedVisibility(
+                        visible = isUpdateTextVisible,
+                        enter = slideInVertically(initialOffsetY = { -40 }) + fadeIn(),
+                        exit = slideOutVertically(targetOffsetY = { -40 }) + fadeOut()
+                    ) {
+                        Text(
+                            text = "Updated: $updateTime",
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    }
 
                     IconButton(
                         modifier = Modifier
@@ -142,6 +162,9 @@ fun WeatherContent(
                         text = "${currentWeather.main.tempMax}/${currentWeather.main.tempMin}°C",
                         textAlign = TextAlign.Center,
                     )
+
+                    Spacer(modifier = Modifier.height(5.dp))
+
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = currentWeather.weather[0].main,
@@ -150,8 +173,6 @@ fun WeatherContent(
                 }
             }
         }
-
-        Spacer(modifier = Modifier.height(10.dp))
 
         Box(
             modifier = Modifier

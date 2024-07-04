@@ -56,7 +56,7 @@ fun SelectionCityContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp)
+            .padding(horizontal = 10.dp)
     ) {
         Column {
             Row(
@@ -89,7 +89,8 @@ fun SelectionCityContent(
                 }
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
-                    text = "Manage cities"
+                    text = "Manage cities",
+                    style = MaterialTheme.typography.titleLarge
                 )
             }
 
@@ -97,7 +98,7 @@ fun SelectionCityContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        vertical = 10.dp
+                        bottom = 10.dp
                     ),
                 listCities = listCities?.map { it.toCityUI() },
                 onSelect = { cityUI ->
@@ -134,9 +135,8 @@ fun SelectionCityContent(
             if (!isDeleteMode) {
                 Row(
                     modifier = Modifier
-                        //.align(Alignment.BottomCenter)
                         .background(color = MaterialTheme.colorScheme.background)
-                        .padding(top = 5.dp)
+                        .padding(vertical = 5.dp)
                 ) {
                     Button(
                         modifier = Modifier.weight(1f),

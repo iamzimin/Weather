@@ -3,12 +3,12 @@ package com.evg.selection_city.presentation
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,12 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.evg.resource.LocalNavHostController
 import com.evg.resource.theme.BorderRadius
 import com.evg.resource.theme.WeatherTheme
@@ -64,18 +61,19 @@ fun CityInfoTile(
                             .weight(1f)
                             .padding(end = 10.dp),
                         text = cityInfo.city,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontSize = 40.sp,
+                        style = MaterialTheme.typography.displaySmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
 
                     Text(
                         text = "${cityInfo.temp}°C",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontSize = 40.sp,
+                        style = MaterialTheme.typography.displaySmall,
                     )
                 }
+
+                Spacer(modifier = Modifier.height(5.dp))
+
                 Row {
                     Text(
                         modifier = Modifier
@@ -101,11 +99,13 @@ fun CityInfoTile(
                     ) {
                         Text(
                             text = cityInfo.city,
-                            style = MaterialTheme.typography.titleLarge,
-                            fontSize = 40.sp,
+                            style = MaterialTheme.typography.displaySmall,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
+
+                        Spacer(modifier = Modifier.height(5.dp))
+
                         Text(
                             text = cityInfo.skyDescription,
                             maxLines = 1,
@@ -139,20 +139,29 @@ fun CityInfoTile(
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun CityInfoTilePreview() {
+fun CityInfoTileDeleteModePreview() {
     WeatherTheme {
-        CityInfoTile(
-            cityInfo = CityInfoUI(
-                id = 1,
-                city = "Paris",
-                skyDescription = "Sunny",
-                temp = 17,
-                tempMax = 20,
-                tempMin = 15,
-            ),
-            currentCityId = 2,
-            deleteCity = { },
-            isDeleteMode = true,
+        val cityInfo = CityInfoUI(
+            id = 1,
+            city = "Paris",
+            skyDescription = "Sunny",
+            temp = 17,
+            tempMax = 20,
+            tempMin = 15,
         )
+        Column {
+            CityInfoTile(
+                cityInfo = cityInfo,
+                currentCityId = 2,
+                deleteCity = { },
+                isDeleteMode = true,
+            )
+            CityInfoTile(
+                cityInfo = cityInfo,
+                currentCityId = 2,
+                deleteCity = { },
+                isDeleteMode = false,
+            )
+        }
     }
 }

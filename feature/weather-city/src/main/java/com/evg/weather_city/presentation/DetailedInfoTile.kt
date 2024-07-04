@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -51,7 +53,7 @@ fun DetailedInfoTile(
                 shape = RectangleShape
             )
             .padding(vertical = 20.dp, horizontal = 5.dp),
-        verticalArrangement = Arrangement.SpaceEvenly,
+        //verticalArrangement = Arrangement.SpaceEvenly,
     ) {
         Box(
             modifier = Modifier
@@ -68,13 +70,15 @@ fun DetailedInfoTile(
             }
         }
 
+        Spacer(modifier = Modifier.height(5.dp))
+
         Text(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp),
             text = title?: "",
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.labelSmall,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             fontSize = 8.sp,
@@ -86,7 +90,6 @@ fun DetailedInfoTile(
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            fontSize = 13.sp,
         )
     }
 }

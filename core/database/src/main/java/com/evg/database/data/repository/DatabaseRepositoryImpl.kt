@@ -27,7 +27,7 @@ class DatabaseRepositoryImpl(
     }
 
     override suspend fun getCityByName(name: String): CityDBO? {
-        return cityDatabase.cityDao.getCityByName(name = name)
+        return cityDatabase.cityDao.getCityByName(name = name.trim())
     }
 
     // Current Weather
