@@ -9,8 +9,10 @@ import com.evg.selection_city.domain.model.CityInfo
 import com.evg.selection_city.domain.usecase.SelectionCityUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,8 +30,11 @@ class SelectionCityViewModel @Inject constructor(
     private val _myCityList = MutableStateFlow<List<CityInfo>?>(null)
     val myCityList: StateFlow<List<CityInfo>?> get() = _myCityList
 
-    private val _city = MutableStateFlow<City?>(null)
-    val city: StateFlow<City?> get() = _city
+    private val _city = MutableSharedFlow<City?>()
+    val city = _city.asSharedFlow()
+
+    val typedCityString = MutableStateFlow<String?>(null)
+    val selectedCity = MutableStateFlow<City?>(null)
 
     private val _latestCityId = MutableStateFlow(selectionCityUseCases.getLatestCityUseCase.invoke() ?: -1)
     val latestCityId: StateFlow<Int> get() = _latestCityId
@@ -54,29 +59,23 @@ class SelectionCityViewModel @Inject constructor(
         }
     }
 
-    fun checkCity(name: String?) {
+    fun navigateCity() {
         viewModelScope.launch {
-            if (name == null) {
-                _city.value = null
-                showToast("City not found")
-                return@launch
-            }
-
-            selectionCityUseCases.getCityByNameUseCase.invoke(name = name)
-                .collect { city ->
-                    if (city == null) {
-                        showToast("City not found")
-                    } else {
-                        showToast("Found $city")
-                    }
-                    _city.value = city
+            if (typedCityString.value != null) {
+                typedCityString.value?.let {
+                    selectionCityUseCases.getCityByNameUseCase.invoke(name = it)
+                        .collect { city ->
+                            if (city == null) {
+                                showToast("City not found")
+                            } else {
+                                showToast("Found $city")
+                            }
+                            _city.emit(city)
+                        }
                 }
-        }
-    }
-
-    fun setSelectedCity(city: City?) {
-        viewModelScope.launch {
-            _city.value = city
+            } else if (selectedCity.value != null) {
+                _city.emit(selectedCity.value)
+            }
         }
     }
 

@@ -28,7 +28,7 @@ fun SelectionCityScreen(
     val latestCityId by viewModel.latestCityId.collectAsState()
     val isCityListLoading by viewModel.isCityListLoading.collectAsState()
 
-    val city by viewModel.city.collectAsState()
+    val city by viewModel.city.collectAsState(initial = null)
 
     if (!isInitialized) {
         LaunchedEffect(Unit) {
@@ -38,17 +38,17 @@ fun SelectionCityScreen(
         }
     }
 
+    if (city != null) {
+        Toast.makeText(context, "Navigating to ${city?.name}", Toast.LENGTH_SHORT).show()
+        val id = city?.id ?: -1
+        navController.navigate("city/${id}")
+    }
+
     if (cities == null && myCities == null) {
         CircularProgressIndicator(
             color = MaterialTheme.colorScheme.primary
         )
     } else {
-        if (city != null) {
-            Toast.makeText(context, "Navigating to ${city?.name}", Toast.LENGTH_SHORT).show()
-            val id = city?.id ?: -1
-            navController.navigate("city/${id}")
-        }
-
         SelectionCityContent(
             cityInfo = myCities!!, //TODO
             listCities = cities,
@@ -56,19 +56,14 @@ fun SelectionCityScreen(
             deleteCity = {
                 viewModel.deleteCityById(id = it)
             },
-            checkCity = { name ->
-                viewModel.checkCity(name)
+            setCityString = { name ->
+                viewModel.typedCityString.value = name
             },
             setCity = { newCity ->
-                viewModel.setSelectedCity(newCity)
+                viewModel.selectedCity.value = newCity
             },
             onCityApply = {
-                //TODO
-                if (viewModel.city.value != null) {
-                    Toast.makeText(context, "Navigating to ${viewModel.city.value}", Toast.LENGTH_SHORT).show()
-                    val id = city?.id ?: -1
-                    navController.navigate("city/${id}")
-                }
+                viewModel.navigateCity()
             }
         )
     }

@@ -45,12 +45,11 @@ fun SelectionCityContent(
     listCities: List<City>?,
     currentCityId: Int,
     deleteCity: (Int) -> Unit,
-    checkCity: (String?) -> Unit,
+    setCityString: (String?) -> Unit,
     setCity: (City?) -> Unit,
     onCityApply: () -> Unit,
 ) {
     val navController = LocalNavHostController.current
-    var typedCityText: String? by rememberSaveable { mutableStateOf(null) }
     var isDeleteMode: Boolean by rememberSaveable { mutableStateOf(false) }
 
     Box(
@@ -100,11 +99,12 @@ fun SelectionCityContent(
                     ),
                 listCities = listCities?.map { it.toCityUI() },
                 onSelect = { cityUI ->
-                    typedCityText = null
+                    setCityString(null)
                     setCity(cityUI.toCity())
                 },
                 onEdit = { text ->
-                    typedCityText = text
+                    setCity(null)
+                    setCityString(text)
                 }
             )
 
@@ -138,11 +138,7 @@ fun SelectionCityContent(
                     Button(
                         modifier = Modifier.weight(1f),
                         onClick = {
-                            if (typedCityText != null) {
-                                checkCity(typedCityText)
-                            } else {
-                                onCityApply()
-                            }
+                            onCityApply()
                         }
                     ) {
                         Text(text = "Add city")
@@ -184,7 +180,7 @@ fun SelectionCityContentPreview() {
             listCities = emptyList(),
             currentCityId = -1,
             deleteCity = { },
-            checkCity = { },
+            setCityString = { },
             setCity = { },
             onCityApply = { },
         )

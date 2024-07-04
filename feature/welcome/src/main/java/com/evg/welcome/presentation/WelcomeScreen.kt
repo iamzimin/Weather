@@ -69,13 +69,6 @@ fun WelcomeScreen(
                 }
             }
         } else {
-            //TODO
-            /*if (city != null) {
-                Toast.makeText(context, "Navigating to ${city?.name}", Toast.LENGTH_SHORT).show()
-                val id = city?.id ?: -1
-                navController.navigate("city/${id}")
-            }*/
-
             WelcomeContent(
                 listCities = cities,
                 setCityString = { name ->
@@ -85,26 +78,12 @@ fun WelcomeScreen(
                     viewModel.selectedCity.value = newCity
                 },
                 onCityApply = {
-                    //TODO
                     viewModel.navigateCity()
-                     /*if (viewModel.city.value != null) {
-                        Toast.makeText(context, "Navigating to ${viewModel.city.value}", Toast.LENGTH_SHORT).show()
-                         val id = city?.id ?: -1
-                         navController.navigate("city/${id}")
-                    }*/
                 }
             )
         }
     }
 }
-
-/*fun cityNavigate(city: City?) {
-    if (city == null) {
-        Toast.makeText(context, "nf", Toast.LENGTH_SHORT).show()
-    } else {
-        Toast.makeText(context, city.name, Toast.LENGTH_SHORT).show()
-    }
-}*/
 
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
