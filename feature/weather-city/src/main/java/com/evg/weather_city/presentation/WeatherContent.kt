@@ -209,70 +209,73 @@ fun WeatherContent(
             Row {
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
+                    icon = painterResource(id = R.drawable.thermometer),
                     title = "Feels like",
                     info = currentWeather.main.feelsLike.toString(),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
+                    icon = painterResource(id = R.drawable.pressure),
                     title = "Pressure",
                     info = currentWeather.main.pressure.toString(),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
+                    icon = painterResource(id = R.drawable.humidity),
                     title = "Humidity",
                     info = currentWeather.main.humidity.toString(),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
-                    title = "Sea level",
+                    icon = painterResource(id = R.drawable.mountain),
+                    title = "Altitude",
                     info = currentWeather.main.seaLevel.toString(),
                 )
             }
             Row {
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
+                    icon = painterResource(id = R.drawable.wind_speed),
                     title = "Wind speed",
                     info = currentWeather.wind.speed.toString(),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
+                    icon = painterResource(id = R.drawable.wind_direction),
                     title = "Wind Direction",
                     info = currentWeather.wind.deg.toString(),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
+                    icon = painterResource(id = R.drawable.cloud),
                     title = "Cloudiness",
                     info = currentWeather.clouds.cloudiness.toString(),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
+                    icon = painterResource(id = R.drawable.visibility),
+                    title = "Sunrise",
+                    info = currentWeather.visibility.toString(),
+                )
+            }
+            Row {
+                DetailedInfoTile(
+                    modifier = Modifier.weight(1f),
+                    icon = painterResource(id = R.drawable.sunrise),
                     title = "Sunrise",
                     info = currentWeather.sys.sunrise.timestampFormatToString(
                         pattern = "HH:mm",
                         timezone = currentWeather.timezone,
                     ),
                 )
-            }
-            Row {
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
-                    icon = painterResource(id = R.drawable.location),
+                    icon = painterResource(id = R.drawable.sunset),
                     title = "Sunset",
                     info = currentWeather.sys.sunset.timestampFormatToString(
                         pattern = "HH:mm",
                         timezone = currentWeather.timezone,
                     ),
-                )
-                DetailedInfoTile(
-                    modifier = Modifier.weight(1f),
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
