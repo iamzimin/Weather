@@ -7,7 +7,7 @@ data class CityResponse(
     @SerializedName("coord") val coordinates: CityCoordinates,
     @SerializedName("country") val country: String,
     @SerializedName("geoname") val geoname: CityGeonameResponse,
-    @SerializedName("langs") val languages: List<CityLanguagesResponse>,
+    //@SerializedName("langs") val languages: List<CityLanguagesResponse>,
     @SerializedName("name") val name: String,
     @SerializedName("stat") val stat: CityStatisticsResponse,
     @SerializedName("stations") val stations: List<CityStationResponse>,
@@ -25,10 +25,10 @@ data class CityGeonameResponse(
     @SerializedName("parent") val parent: Int
 )
 
-data class CityLanguagesResponse(
-    @SerializedName("de") val de: String?, //TODO
+/*data class CityLanguagesResponse(
+    @SerializedName("de") val de: String?,
     @SerializedName("fa") val fa: String?
-)
+)*/
 
 data class CityStatisticsResponse(
     @SerializedName("level") val level: Double,

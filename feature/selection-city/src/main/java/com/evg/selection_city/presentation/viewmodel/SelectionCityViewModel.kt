@@ -24,8 +24,8 @@ class SelectionCityViewModel @Inject constructor(
     private val _cityList = MutableStateFlow<List<City>?>(null)
     val cityList: StateFlow<List<City>?> get() = _cityList
 
-    private val _isCityListLoading = MutableStateFlow(true)
-    val isCityListLoading: StateFlow<Boolean> = _isCityListLoading
+    private val _isMyCitiesListLoading = MutableStateFlow(true)
+    val isMyCitiesListLoading: StateFlow<Boolean> = _isMyCitiesListLoading
 
     private val _myCityList = MutableStateFlow<List<CityInfo>?>(null)
     val myCityList: StateFlow<List<CityInfo>?> get() = _myCityList
@@ -41,20 +41,20 @@ class SelectionCityViewModel @Inject constructor(
 
     fun getCitiesList() {
         viewModelScope.launch {
-            _isCityListLoading.value = true
             selectionCityUseCases.getCitiesListUseCase.invoke()
                 .collect { cities ->
                     _cityList.value = cities
-                    _isCityListLoading.value = false
                 }
         }
     }
 
     fun getMyCityList() {
         viewModelScope.launch {
+            _isMyCitiesListLoading.value = true
             selectionCityUseCases.getMyCitiesListUseCase.invoke()
                 .collect { cities ->
                     _myCityList.value = cities
+                    _isMyCitiesListLoading.value = false
                 }
         }
     }
@@ -66,9 +66,7 @@ class SelectionCityViewModel @Inject constructor(
                     selectionCityUseCases.getCityByNameUseCase.invoke(name = it)
                         .collect { city ->
                             if (city == null) {
-                                showToast("City not found")
-                            } else {
-                                showToast("Found $city")
+                                Toast.makeText(context, "City not found", Toast.LENGTH_SHORT).show()
                             }
                             _city.emit(city)
                         }
@@ -84,9 +82,5 @@ class SelectionCityViewModel @Inject constructor(
             selectionCityUseCases.deleteCityByIdUseCase.invoke(id = id)
             _myCityList.value = _myCityList.value?.filter { it.id != id }
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

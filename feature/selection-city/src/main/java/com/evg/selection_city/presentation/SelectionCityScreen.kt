@@ -26,7 +26,7 @@ fun SelectionCityScreen(
     val cities by viewModel.cityList.collectAsState()
     val myCities by viewModel.myCityList.collectAsState()
     val latestCityId by viewModel.latestCityId.collectAsState()
-    val isCityListLoading by viewModel.isCityListLoading.collectAsState()
+    val isMyCitiesListLoading by viewModel.isMyCitiesListLoading.collectAsState()
 
     val city by viewModel.city.collectAsState(initial = null)
 
@@ -39,33 +39,33 @@ fun SelectionCityScreen(
     }
 
     if (city != null) {
-        Toast.makeText(context, "Navigating to ${city?.name}", Toast.LENGTH_SHORT).show()
-        val id = city?.id ?: -1
-        navController.navigate("city/${id}")
+        navController.navigate("city/${city?.id ?: -1}")
     }
 
-    if (cities == null && myCities == null) {
+    if (isMyCitiesListLoading) {
         CircularProgressIndicator(
             color = MaterialTheme.colorScheme.primary
         )
     } else {
-        SelectionCityContent(
-            cityInfo = myCities!!, //TODO
-            listCities = cities,
-            currentCityId = latestCityId,
-            deleteCity = {
-                viewModel.deleteCityById(id = it)
-            },
-            setCityString = { name ->
-                viewModel.typedCityString.value = name
-            },
-            setCity = { newCity ->
-                viewModel.selectedCity.value = newCity
-            },
-            onCityApply = {
-                viewModel.navigateCity()
-            }
-        )
+        myCities?.let { mc ->
+            SelectionCityContent(
+                cityInfo = mc,
+                listCities = cities,
+                currentCityId = latestCityId,
+                deleteCity = {
+                    viewModel.deleteCityById(id = it)
+                },
+                setCityString = { name ->
+                    viewModel.typedCityString.value = name
+                },
+                setCity = { newCity ->
+                    viewModel.selectedCity.value = newCity
+                },
+                onCityApply = {
+                    viewModel.navigateCity()
+                }
+            )
+        }
     }
 
 }

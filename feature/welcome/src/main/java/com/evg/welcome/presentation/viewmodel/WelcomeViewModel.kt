@@ -40,9 +40,7 @@ class WelcomeViewModel @Inject constructor(
                     welcomeUseCases.getCityByNameUseCase.invoke(name = it)
                         .collect { city ->
                             if (city == null) {
-                                showToast("City not found")
-                            } else {
-                                showToast("Found $city")
+                                Toast.makeText(context, "City not found", Toast.LENGTH_SHORT).show()
                             }
                             _city.emit(city)
                         }
@@ -62,9 +60,5 @@ class WelcomeViewModel @Inject constructor(
                     _isCityListLoading.value = false
                 }
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

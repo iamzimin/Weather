@@ -49,9 +49,7 @@ fun WelcomeScreen(
     }
 
     if (city != null) {
-        Toast.makeText(context, "Navigating to ${city?.name}", Toast.LENGTH_SHORT).show()
-        val id = city?.id ?: -1
-        navController.navigate("city/${id}") {
+        navController.navigate("city/${city?.id ?: -1}") {
             popUpTo("welcome") {
                 inclusive = true
             }

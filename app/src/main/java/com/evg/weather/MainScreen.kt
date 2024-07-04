@@ -25,7 +25,7 @@ import com.evg.welcome.presentation.WelcomeScreen
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    val sharedPreferencesRepository = SharedPrefsRepositoryImpl(context = LocalContext.current) //TODO
+    val sharedPreferencesRepository = SharedPrefsRepositoryImpl(context = LocalContext.current)
     val latestCity = sharedPreferencesRepository.getLatestCity()
 
     CompositionLocalProvider(LocalNavHostController provides navController) {
