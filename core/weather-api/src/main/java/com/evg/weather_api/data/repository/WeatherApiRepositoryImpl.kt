@@ -1,6 +1,8 @@
 package com.evg.weather_api.data.repository
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.evg.database.domain.repository.DatabaseRepository
 import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
 import com.evg.weather_api.domain.mapper.toCityDBO
@@ -105,7 +107,16 @@ class WeatherApiRepositoryImpl(
         }
     }
 
-
+    override fun isInternetAvailable(): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            else -> false
+        }
+    }
 
 
     private suspend fun saveResponseToDB(tarGzFile: File): List<CityResponse>?  {

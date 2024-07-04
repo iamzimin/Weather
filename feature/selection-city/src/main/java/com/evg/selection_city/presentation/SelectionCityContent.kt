@@ -1,6 +1,7 @@
 package com.evg.selection_city.presentation
 
 import android.content.res.Configuration
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -143,7 +144,10 @@ fun SelectionCityContent(
                             onCityApply()
                         }
                     ) {
-                        Text(text = "Add city")
+                        Text(
+                            text = "Add city",
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
                     }
 
                     Spacer(modifier = Modifier.width(10.dp))
@@ -154,13 +158,23 @@ fun SelectionCityContent(
                             isDeleteMode = !isDeleteMode
                         }
                     ) {
-                        Text(text = "Remove city")
+                        Text(
+                            text = "Remove city",
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
                     }
                 }
             }
         }
-
     }
+
+    BackHandler(onBack = {
+        if (isDeleteMode) {
+            isDeleteMode = false
+        } else {
+            navController.popBackStack()
+        }
+    })
 }
 
 @Composable

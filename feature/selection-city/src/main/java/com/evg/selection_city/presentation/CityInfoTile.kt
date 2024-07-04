@@ -47,7 +47,9 @@ fun CityInfoTile(
             .clip(shape = RoundedCornerShape(BorderRadius))
             .background(color = MaterialTheme.colorScheme.primaryContainer)
             .clickable {
-                navController.navigate("city/${cityInfo.id}")
+                if (!isDeleteMode) {
+                    navController.navigate("city/${cityInfo.id}")
+                }
             }
     ) {
         Column(

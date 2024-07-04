@@ -1,12 +1,9 @@
 package com.evg.weather_city.domain.mapper
 
 import com.evg.weather_api.domain.models.CurrentWeatherCloudsResponse
-import com.evg.weather_api.domain.models.CurrentWeatherCoordinatesResponse
 import com.evg.weather_api.domain.models.CurrentWeatherInfoResponse
 import com.evg.weather_api.domain.models.CurrentWeatherMainResponse
-import com.evg.weather_api.domain.models.CurrentWeatherRainResponse
 import com.evg.weather_api.domain.models.CurrentWeatherResponse
-import com.evg.weather_api.domain.models.CurrentWeatherSnowResponse
 import com.evg.weather_api.domain.models.CurrentWeatherSysResponse
 import com.evg.weather_api.domain.models.CurrentWeatherWindResponse
 import com.evg.weather_city.domain.model.CurrentWeather

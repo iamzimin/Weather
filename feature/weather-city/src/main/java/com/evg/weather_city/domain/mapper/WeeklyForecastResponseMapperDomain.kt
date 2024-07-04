@@ -1,14 +1,9 @@
 package com.evg.weather_city.domain.mapper
 
 import com.evg.weather_api.domain.models.WeeklyForecastCityInfoResponse
-import com.evg.weather_api.domain.models.WeeklyForecastCloudsResponse
-import com.evg.weather_api.domain.models.WeeklyForecastCoordinatesResponse
 import com.evg.weather_api.domain.models.WeeklyForecastMainResponse
 import com.evg.weather_api.domain.models.WeeklyForecastResponse
-import com.evg.weather_api.domain.models.WeeklyForecastSysResponse
-import com.evg.weather_api.domain.models.WeeklyForecastWeatherInfoResponse
 import com.evg.weather_api.domain.models.WeeklyForecastWeatherResponse
-import com.evg.weather_api.domain.models.WeeklyForecastWindResponse
 import com.evg.weather_city.domain.model.WeeklyForecast
 import com.evg.weather_city.domain.model.WeeklyForecastCityInfo
 import com.evg.weather_city.domain.model.WeeklyForecastMain

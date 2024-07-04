@@ -8,4 +8,6 @@ interface WeatherApiRepository {
     suspend fun downloadCitiesFile(): List<CityResponse>?
     suspend fun getCurrentWeather(cityId: Int): CurrentWeatherResponse?
     suspend fun getForecastWeeklyWeather(cityId: Int): WeeklyForecastResponse?
+
+    fun isInternetAvailable(): Boolean
 }

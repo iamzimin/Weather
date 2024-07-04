@@ -57,4 +57,7 @@ dependencies {
 
     //Navigation
     implementation(libs.androidx.ui.navigation)
+
+    // Swipe Refresh
+    implementation(libs.swiperefresh.compose)
 }
