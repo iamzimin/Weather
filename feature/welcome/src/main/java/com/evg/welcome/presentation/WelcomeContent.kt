@@ -2,7 +2,9 @@ package com.evg.welcome.presentation
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -39,8 +41,7 @@ fun WelcomeContent(
     ) {
         Text(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 50.dp),
+                .align(Alignment.CenterHorizontally),
             text = "Weather",
             style = MaterialTheme.typography.titleLarge,
             fontSize = 40.sp,
@@ -67,10 +68,13 @@ fun WelcomeContent(
                 setCityString(text)
             }
         )
+        
+        Spacer(modifier = Modifier.height(30.dp))
 
         Button(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally),
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 60.dp),
             onClick = {
                 onCityApply()
             }
@@ -86,7 +90,7 @@ fun WelcomeContent(
 
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun WelcomeContentPreview() {
     WeatherTheme {
         WelcomeContent(

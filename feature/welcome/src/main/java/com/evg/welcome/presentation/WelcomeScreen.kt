@@ -60,24 +60,20 @@ fun WelcomeScreen(
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center,
     ) {
         if (isCityListLoading) {
-            Box(
-                Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(
-                        text = "Loading a list of cities"
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    CircularProgressIndicator(
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
+                Text(
+                    text = "Loading a list of cities"
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
         } else {
             WelcomeContent(
