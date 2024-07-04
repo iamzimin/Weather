@@ -33,41 +33,6 @@ class WeatherApiRepositoryImpl(
     private val weatherApi = retrofitWeather.create(WeatherApi::class.java)
     private val weatherApiKey = "041578a3cfa9aff939e95ad4e8b1e712"
 
-    /*override suspend fun downloadCityFile(): List<CityResponse>? {
-        return try {
-            val response = cityApi.downloadFile("current.city.list.min.json.gz")
-            return withContext(Dispatchers.IO) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body() ?: return@withContext null
-
-                    val file = File(context.cacheDir, "current.city.list.min.json.tar.gz")
-                    val fos = FileOutputStream(file)
-                    fos.write(responseBody.bytes())
-                    fos.close()
-
-                    val jsonFile = File(context.cacheDir, "currentCityList.json")
-
-                    GZIPInputStream(FileInputStream(file)).use { gzInputStream ->
-                        FileOutputStream(jsonFile).use { out ->
-                            gzInputStream.copyTo(out)
-                        }
-                    }
-
-                    val jsonString = jsonFile.readText()
-                    val listType = object : TypeToken<List<CityResponse>>() {}.type
-                    val cities: List<CityResponse> = Gson().fromJson(jsonString, listType)
-
-                    databaseRepository.insertCities(cities.map { it.toCityDBO() })
-
-                    return@withContext cities
-                }
-                return@withContext null
-            }
-        } catch (e: Exception) {
-            null
-        }
-    }*/
-
     override suspend fun downloadCitiesFile(): List<CityResponse>? {
         try {
             if (!sharedPrefsRepository.getIsCitiesListDownloaded()) {
@@ -86,12 +51,12 @@ class WeatherApiRepositoryImpl(
 
                     sharedPrefsRepository.saveIsCitiesListDownloaded()
 
-                    saveResponseToDB(tarGzFile = file)
+                    return saveResponseToDB(tarGzFile = file)
                 }
             } else {
                 val file = File(context.cacheDir, "current.city.list.min.json.tar.gz")
 
-                saveResponseToDB(tarGzFile = file)
+                return saveResponseToDB(tarGzFile = file)
             }
         } catch (e: Exception) {
             return null
@@ -99,6 +64,7 @@ class WeatherApiRepositoryImpl(
 
         return null
     }
+
     override suspend fun getCurrentWeather(cityId: Int): CurrentWeatherResponse? {
         return try {
             val weather = weatherApi.getCurrentWeather(
@@ -126,8 +92,6 @@ class WeatherApiRepositoryImpl(
                 apiKey = weatherApiKey,
             )
 
-            //TODO test if crash throw NullPointerException("Test")
-
             val weatherDBO = weather?.toWeeklyForecastDBO()
             weatherDBO?.let {
                 databaseRepository.insertWeeklyForecast(
@@ -144,7 +108,7 @@ class WeatherApiRepositoryImpl(
 
 
 
-    private suspend fun saveResponseToDB(tarGzFile: File) {
+    private suspend fun saveResponseToDB(tarGzFile: File): List<CityResponse>?  {
         val jsonFile = File(context.cacheDir, "currentCityList.json")
 
         withContext(Dispatchers.IO) {
@@ -162,6 +126,8 @@ class WeatherApiRepositoryImpl(
         databaseRepository.insertCities(cities.map { it.toCityDBO() })
 
         sharedPrefsRepository.saveIsCitiesListUnzipped()
+
+        return cities
     }
 
 }
