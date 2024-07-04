@@ -37,20 +37,16 @@ private fun mapToDailyForecast(forecasts: List<WeeklyForecastWeather>): DailyFor
     val tempMin = forecasts.minOfOrNull { it.main.tempMin }?.kelvinToCelsius() ?: 0
     val tempMax = forecasts.maxOfOrNull { it.main.tempMax }?.kelvinToCelsius() ?: 0
 
-    val iconCount = mutableMapOf<String, Int>()
-    val mainCount = mutableMapOf<String, Int>()
+    val idCount = mutableMapOf<Int, Int>()
 
     forecasts.forEach { forecast ->
-        val iconKey = forecast.weatherIcon.takeWhile { it.isDigit() }
-        iconCount[iconKey] = (iconCount[iconKey] ?: 0) + 1
-
-        val mainKey = forecast.weatherMain
-        mainCount[mainKey] = (mainCount[mainKey] ?: 0) + 1
+        val idKey = forecast.weatherId
+        idCount[idKey] = (idCount[idKey] ?: 0) + 1
     }
 
-    val mostFrequentIconDigits = iconCount.maxByOrNull { it.value }?.key
-    val mostFrequentIcon = if (mostFrequentIconDigits == null) "" else "${mostFrequentIconDigits}d"
-    val mostFrequentMain = mainCount.maxByOrNull { it.value }?.key ?: ""
+    val mostFrequentId = idCount.maxByOrNull { it.value }?.value ?: -1
+    val mostFrequentIcon = forecasts.getOrNull(mostFrequentId)?.weatherIcon ?: ""
+    val mostFrequentMain = forecasts.getOrNull(mostFrequentId)?.weatherMain?: ""
 
     return DailyForecastUI(
         timestamp = timestamp,
