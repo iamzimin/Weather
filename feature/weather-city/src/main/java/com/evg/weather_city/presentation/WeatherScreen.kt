@@ -1,5 +1,7 @@
 package com.evg.weather_city.presentation
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -9,7 +11,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.evg.resource.LocalNavHostController
 import com.evg.weather_city.presentation.viewmodel.WeatherCityViewModel
 
 @Composable
@@ -17,6 +21,7 @@ fun WeatherCityScreen(
     cityId: Int,
     viewModel: WeatherCityViewModel = hiltViewModel<WeatherCityViewModel>(),
 ) {
+    val context = LocalContext.current
     var isInitialized by rememberSaveable { mutableStateOf(false) }
 
     val currentWeather by viewModel.currentWeather.collectAsState()
@@ -43,4 +48,11 @@ fun WeatherCityScreen(
             dailyWeather = dailyWeather!!,
         )
     }
+
+
+
+    BackHandler(onBack = {
+        val activity = (context as? Activity)
+        activity?.finish()
+    })
 }
