@@ -31,10 +31,9 @@ class WelcomeViewModel @Inject constructor(
     val typedCityString = MutableStateFlow<String?>(null)
     val selectedCity = MutableStateFlow<City?>(null)
 
-
     fun navigateCity(context: Context) {
         viewModelScope.launch {
-            if (typedCityString.value != null) {
+            if (typedCityString.value != null && typedCityString.value != "") {
                 typedCityString.value?.let {
                     welcomeUseCases.getCityByNameUseCase.invoke(name = it)
                         .collect { city ->

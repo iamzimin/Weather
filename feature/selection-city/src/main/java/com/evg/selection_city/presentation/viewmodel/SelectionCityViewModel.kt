@@ -60,7 +60,7 @@ class SelectionCityViewModel @Inject constructor(
 
     fun navigateCity(context: Context) {
         viewModelScope.launch {
-            if (typedCityString.value != null) {
+            if (typedCityString.value != null && typedCityString.value != "") {
                 typedCityString.value?.let {
                     selectionCityUseCases.getCityByNameUseCase.invoke(name = it)
                         .collect { city ->

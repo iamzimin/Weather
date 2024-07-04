@@ -141,7 +141,8 @@ fun WeatherContent(
                     )
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .padding(start = 25.dp),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.Top,
                     ) {
@@ -153,7 +154,7 @@ fun WeatherContent(
                             modifier = Modifier
                                 .padding(top = 15.dp),
                             text = "°C",
-                            fontSize = 15.sp,
+                            fontSize = 25.sp,
                         )
                     }
                     Text(
