@@ -26,7 +26,8 @@ object DatabaseModule {
             context,
             CityDatabase::class.java,
             CityDatabase.DATABASE_NAME
-        ).build()
+        ).createFromAsset("database/${CityDatabase.DATABASE_NAME}")
+         .build()
     }
 
     @Provides
