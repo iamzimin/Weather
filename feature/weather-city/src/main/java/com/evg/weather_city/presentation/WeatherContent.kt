@@ -2,7 +2,6 @@ package com.evg.weather_city.presentation
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,17 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -126,17 +119,27 @@ fun WeatherContent(
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge
                     )
-                    Row {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.Top,
+                    ) {
                         Text(
-                            modifier = Modifier.fillMaxWidth(),
                             text = currentWeather.main.temp.toString(),
-                            textAlign = TextAlign.Center,
                             fontSize = 100.sp,
+                        )
+                        Text(
+                            modifier = Modifier
+                                .padding(top = 15.dp),
+                            text = "°C",
+                            fontSize = 15.sp,
                         )
                     }
                     Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = "${currentWeather.main.tempMax} / ${currentWeather.main.tempMin}",
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        text = "${currentWeather.main.tempMax}/${currentWeather.main.tempMin}°C",
                         textAlign = TextAlign.Center,
                     )
                     Text(
@@ -200,11 +203,6 @@ fun WeatherContent(
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(BorderRadius))
                 .background(color = MaterialTheme.colorScheme.primaryContainer)
-                /*.border(
-                    width = 0.5.dp,
-                    color = MaterialTheme.colorScheme.background,
-                    shape = MaterialTheme.shapes.medium
-                )*/
         ) {
             Row {
                 DetailedInfoTile(
@@ -212,24 +210,28 @@ fun WeatherContent(
                     icon = painterResource(id = R.drawable.thermometer),
                     title = "Feels like",
                     info = currentWeather.main.feelsLike.toString(),
+                    unit = "°C",
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.pressure),
                     title = "Pressure",
                     info = currentWeather.main.pressure.toString(),
+                    unit = "hPa",
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.humidity),
                     title = "Humidity",
                     info = currentWeather.main.humidity.toString(),
+                    unit = "%",
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.mountain),
                     title = "Altitude",
                     info = currentWeather.main.seaLevel.toString(),
+                    unit = "m",
                 )
             }
             Row {
@@ -238,24 +240,28 @@ fun WeatherContent(
                     icon = painterResource(id = R.drawable.wind_speed),
                     title = "Wind speed",
                     info = currentWeather.wind.speed.toString(),
+                    unit = "m/s",
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.wind_direction),
                     title = "Wind Direction",
                     info = currentWeather.wind.deg.toString(),
+                    unit = "°",
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.cloud),
                     title = "Cloudiness",
                     info = currentWeather.clouds.cloudiness.toString(),
+                    unit = "%",
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
                     icon = painterResource(id = R.drawable.visibility),
-                    title = "Sunrise",
+                    title = "Visibility",
                     info = currentWeather.visibility.toString(),
+                    unit = "m",
                 )
             }
             Row {
@@ -267,6 +273,7 @@ fun WeatherContent(
                         pattern = "HH:mm",
                         timezone = currentWeather.timezone,
                     ),
+                    unit = "",
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),
@@ -276,6 +283,7 @@ fun WeatherContent(
                         pattern = "HH:mm",
                         timezone = currentWeather.timezone,
                     ),
+                    unit = "",
                 )
                 DetailedInfoTile(
                     modifier = Modifier.weight(1f),

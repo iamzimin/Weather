@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,46 +58,58 @@ fun CityInfoTile(
             if (!isDeleteMode) {
                 Row {
                     Text(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 10.dp),
                         text = cityInfo.city,
                         style = MaterialTheme.typography.titleLarge,
                         fontSize = 40.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
 
-                    Spacer(modifier = Modifier.weight(1f))
-
                     Text(
-                        text = cityInfo.temp.toString(),
+                        text = "${cityInfo.temp}°C",
                         style = MaterialTheme.typography.titleLarge,
                         fontSize = 40.sp,
                     )
                 }
                 Row {
                     Text(
-                        text = cityInfo.skyDescription
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 10.dp),
+                        text = cityInfo.skyDescription,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
 
-                    Spacer(modifier = Modifier.weight(1f))
-
                     Text(
-                        text = "${cityInfo.tempMax}/${cityInfo.tempMin}"
+                        text = "${cityInfo.tempMax}/${cityInfo.tempMin}°C"
                     )
                 }
             } else {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Column {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 10.dp)
+                    ) {
                         Text(
                             text = cityInfo.city,
                             style = MaterialTheme.typography.titleLarge,
                             fontSize = 40.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                         Text(
-                            text = cityInfo.skyDescription
+                            text = cityInfo.skyDescription,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
-
-                    Spacer(modifier = Modifier.weight(1f))
 
                     if (currentCityId != cityInfo.id) {
                         IconButton(

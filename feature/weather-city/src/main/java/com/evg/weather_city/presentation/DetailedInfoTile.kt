@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,6 +40,7 @@ fun DetailedInfoTile(
     icon: Painter? = null,
     title: String? = null,
     info: String? = null,
+    unit: String = "",
 ) {
     Column(
         modifier = modifier
@@ -73,27 +75,33 @@ fun DetailedInfoTile(
             text = title?: "",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodySmall,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             fontSize = 8.sp,
         )
         Text(
             modifier = Modifier
                 .fillMaxWidth(),
-            text = info?: "",
-            textAlign = TextAlign.Center
+            text = if (info != null) "$info$unit" else "",
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            fontSize = 13.sp,
         )
     }
 }
 
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun DetailedInfoTilePreview() {
     WeatherTheme {
         DetailedInfoTile(
             modifier = Modifier,
             icon = painterResource(id = R.drawable.location),
             title = "Title",
-            info = "50%",
+            info = "50",
+            unit = "%"
         )
     }
 }

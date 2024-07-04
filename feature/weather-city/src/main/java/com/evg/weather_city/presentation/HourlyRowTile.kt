@@ -56,7 +56,7 @@ fun HourlyRowTile(
         )
 
         Text(
-            text = hourlyForecastUI.temp.toString(),
+            text = "${hourlyForecastUI.temp}°C",
             textAlign = TextAlign.Center,
         )
 
