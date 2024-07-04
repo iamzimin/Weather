@@ -90,15 +90,15 @@ fun WeatherContent(
                         .padding(top = 10.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    val updateTime = currentWeather.timestamp.timestampFormatToString(
-                        pattern = "HH:mm",
-                        timezone = TimeZone.getDefault().rawOffset / 1000,
-                    )
                     androidx.compose.animation.AnimatedVisibility(
                         visible = isUpdateTextVisible,
                         enter = slideInVertically(initialOffsetY = { -40 }) + fadeIn(),
                         exit = slideOutVertically(targetOffsetY = { -40 }) + fadeOut()
                     ) {
+                        val updateTime = currentWeather.timestamp.timestampFormatToString(
+                            pattern = "HH:mm",
+                            timezone = TimeZone.getDefault().rawOffset / 1000,
+                        )
                         Text(
                             text = "Updated: $updateTime",
                             style = MaterialTheme.typography.bodySmall,
@@ -127,7 +127,7 @@ fun WeatherContent(
                     modifier = Modifier
                         .align(alignment = Alignment.CenterHorizontally)
                         .padding(
-                            top = 20.dp,
+                            top = 10.dp,
                             bottom = 30.dp,
                             start = horizontalPadding,
                             end = horizontalPadding,

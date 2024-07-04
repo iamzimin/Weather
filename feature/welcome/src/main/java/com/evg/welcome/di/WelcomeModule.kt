@@ -20,14 +20,12 @@ object WelcomeModule {
     @Provides
     @Singleton
     fun provideWelcomeRepository(
-        @ApplicationContext context: Context,
         weatherApiRepository: WeatherApiRepository,
         databaseRepository: DatabaseRepository,
         sharedPrefsRepository: SharedPrefsRepository,
     ): WelcomeRepository {
         println("provided WelcomeRepositoryImpl")
         return WelcomeRepositoryImpl(
-            context = context,
             weatherApiRepository = weatherApiRepository,
             databaseRepository = databaseRepository,
             sharedPrefsRepository = sharedPrefsRepository,

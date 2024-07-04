@@ -1,6 +1,5 @@
 package com.evg.welcome.data.repository
 
-import android.content.Context
 import com.evg.database.domain.repository.DatabaseRepository
 import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
 import com.evg.weather_api.domain.repository.WeatherApiRepository
@@ -11,14 +10,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class WelcomeRepositoryImpl(
-    private val context: Context,
     private val weatherApiRepository: WeatherApiRepository,
     private val databaseRepository: DatabaseRepository,
     private val sharedPrefsRepository: SharedPrefsRepository
 ): WelcomeRepository {
     override suspend fun getCityList(): Flow<List<City>?> {
         return flow {
-            if (!sharedPrefsRepository.getIsCitiesListUnzipped()) {
+            if (!sharedPrefsRepository.getIsCitiesListUnzipped() && weatherApiRepository.isInternetAvailable()) {
                 emit(weatherApiRepository.downloadCitiesFile()?.map { it.toCity() })
             } else {
                 emit(databaseRepository.getAllCities()?.map { it.toCity() })

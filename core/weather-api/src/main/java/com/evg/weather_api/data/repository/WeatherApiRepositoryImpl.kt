@@ -33,17 +33,19 @@ class WeatherApiRepositoryImpl(
 ): WeatherApiRepository {
     private val cityApi = retrofitCity.create(CityApi::class.java)
     private val weatherApi = retrofitWeather.create(WeatherApi::class.java)
-    private val weatherApiKey = "041578a3cfa9aff939e95ad4e8b1e712"
+    private val weatherApiKey = "077498dc11566a8e3a76031ffef73fef"
 
     override suspend fun downloadCitiesFile(): List<CityResponse>? {
+        val url = "city.list.min.json.gz" // old current.city.list.min.json.gz
+
         try {
             if (!sharedPrefsRepository.getIsCitiesListDownloaded()) {
-                val response = cityApi.downloadFile("current.city.list.min.json.gz")
+                val response = cityApi.downloadFile(url)
 
                 if (response.isSuccessful) {
                     val responseBody = response.body() ?: return null
 
-                    val file = File(context.cacheDir, "current.city.list.min.json.tar.gz")
+                    val file = File(context.cacheDir, url)
 
                     withContext(Dispatchers.IO) {
                         val fos = FileOutputStream(file)
@@ -56,7 +58,7 @@ class WeatherApiRepositoryImpl(
                     return saveResponseToDB(tarGzFile = file)
                 }
             } else {
-                val file = File(context.cacheDir, "current.city.list.min.json.tar.gz")
+                val file = File(context.cacheDir, url)
 
                 return saveResponseToDB(tarGzFile = file)
             }
@@ -89,6 +91,7 @@ class WeatherApiRepositoryImpl(
 
     override suspend fun getForecastWeeklyWeather(cityId: Int): WeeklyForecastResponse? {
         return try {
+            //throw Exception("dsfsd")
             val weather = weatherApi.getWeeklyForecast(
                 cityId = cityId,
                 apiKey = weatherApiKey,
@@ -119,7 +122,7 @@ class WeatherApiRepositoryImpl(
     }
 
 
-    private suspend fun saveResponseToDB(tarGzFile: File): List<CityResponse>?  {
+    private suspend fun saveResponseToDB(tarGzFile: File): List<CityResponse>  {
         val jsonFile = File(context.cacheDir, "currentCityList.json")
 
         withContext(Dispatchers.IO) {
@@ -135,6 +138,9 @@ class WeatherApiRepositoryImpl(
         val cities: List<CityResponse> = Gson().fromJson(jsonString, listType)
 
         databaseRepository.insertCities(cities.map { it.toCityDBO() })
+
+        tarGzFile.delete()
+        jsonFile.delete()
 
         sharedPrefsRepository.saveIsCitiesListUnzipped()
 

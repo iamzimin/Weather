@@ -7,15 +7,23 @@ import com.evg.selection_city.domain.model.City
 import com.evg.selection_city.domain.model.CityInfo
 import com.evg.selection_city.domain.repository.SelectionCityRepository
 import com.evg.shared_prefs.domain.repository.SharedPrefsRepository
+import com.evg.weather_api.domain.repository.WeatherApiRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class SelectionCityRepositoryImpl(
     private val databaseRepository: DatabaseRepository,
     private val sharedPrefsRepository: SharedPrefsRepository,
+    private val weatherApiRepository: WeatherApiRepository,
 ): SelectionCityRepository {
     override fun getCitiesList(): Flow<List<City>?> {
-        return flow { emit(databaseRepository.getAllCities()?.map { it.toCity() }) }
+        return flow {
+            if (!sharedPrefsRepository.getIsCitiesListUnzipped() && weatherApiRepository.isInternetAvailable()) {
+                emit(weatherApiRepository.downloadCitiesFile()?.map { it.toCity() })
+            } else {
+                emit(databaseRepository.getAllCities()?.map { it.toCity() })
+            }
+        }
     }
 
     override fun getCityByName(name: String): Flow<City?> {

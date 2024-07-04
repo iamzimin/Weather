@@ -67,7 +67,7 @@ fun ExposedCityMenu(
         )
 
         listCities?.let { cities ->
-            if (selectedText.text.length < 3 && listCities.size > 50) return@ExposedDropdownMenuBox
+            if (selectedText.text.length < 3 && listCities.size > 20) return@ExposedDropdownMenuBox
 
             val filteredOptions =
                 cities.filter { it.name.contains(selectedText.text, ignoreCase = true) }

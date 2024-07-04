@@ -20,14 +20,17 @@ import javax.inject.Inject
 class SelectionCityViewModel @Inject constructor(
     private val selectionCityUseCases: SelectionCityUseCases,
 ): ViewModel() {
+    /*private val _isCitiesListLoading = MutableStateFlow(true)
+    val isCitiesListLoading: StateFlow<Boolean> = _isCitiesListLoading*/
+
     private val _cityList = MutableStateFlow<List<City>?>(null)
     val cityList: StateFlow<List<City>?> get() = _cityList
 
-    private val _isMyCitiesListLoading = MutableStateFlow(true)
-    val isMyCitiesListLoading: StateFlow<Boolean> = _isMyCitiesListLoading
-
     private val _myCityList = MutableStateFlow<List<CityInfo>?>(null)
     val myCityList: StateFlow<List<CityInfo>?> get() = _myCityList
+
+    private val _isMyCitiesListLoading = MutableStateFlow(true)
+    val isMyCitiesListLoading: StateFlow<Boolean> = _isMyCitiesListLoading
 
     private val _city = MutableSharedFlow<City?>()
     val city = _city.asSharedFlow()
@@ -40,9 +43,11 @@ class SelectionCityViewModel @Inject constructor(
 
     fun getCitiesList() {
         viewModelScope.launch {
+            //_isCitiesListLoading.value = true
             selectionCityUseCases.getCitiesListUseCase.invoke()
                 .collect { cities ->
                     _cityList.value = cities
+                    //_isCitiesListLoading.value = false
                 }
         }
     }
