@@ -72,12 +72,14 @@ fun SelectionCityContent(
                 ) {
                     if (isDeleteMode) {
                         Icon(
+                            modifier = Modifier.padding(5.dp),
                             imageVector = Icons.Default.Close,
                             tint = MaterialTheme.colorScheme.inverseSurface,
                             contentDescription = "Arrow back",
                         )
                     } else {
                         Icon(
+                            modifier = Modifier.padding(5.dp),
                             painter = painterResource(id = R.drawable.arrow_back),
                             tint = MaterialTheme.colorScheme.inverseSurface,
                             contentDescription = "Arrow back",
@@ -94,8 +96,7 @@ fun SelectionCityContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        top = 20.dp,
-                        bottom = 10.dp
+                        vertical = 10.dp
                     ),
                 listCities = listCities?.map { it.toCityUI() },
                 onSelect = { cityUI ->
@@ -167,7 +168,7 @@ fun SelectionCityContent(
 fun SelectionCityContentPreview() {
     WeatherTheme {
         SelectionCityContent(
-            cityInfo = List(8) {
+            cityInfo = List(0) {
                 CityInfo(
                     id = it,
                     city = "Paris",

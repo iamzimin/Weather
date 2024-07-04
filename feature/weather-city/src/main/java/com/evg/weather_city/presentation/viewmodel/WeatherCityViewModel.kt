@@ -23,31 +23,38 @@ class WeatherCityViewModel @Inject constructor(
     private val _currentWeather = MutableStateFlow<CurrentWeatherUI?>(null)
     val currentWeather: StateFlow<CurrentWeatherUI?> get() = _currentWeather
 
+    private val _isCurrentWeatherLoading = MutableStateFlow<Boolean>(true)
+    val isCurrentWeatherLoading: StateFlow<Boolean> get() = _isCurrentWeatherLoading
+
+
     private val _hourlyForecast = MutableStateFlow<List<HourlyForecastUI>?>(null)
     val hourlyForecast: StateFlow<List<HourlyForecastUI>?> get() = _hourlyForecast
 
     private val _dailyForecast = MutableStateFlow<List<DailyForecastUI>?>(null)
     val dailyForecast: StateFlow<List<DailyForecastUI>?> get() = _dailyForecast
 
+    private val _isForecastLoading = MutableStateFlow<Boolean>(true)
+    val isForecastLoading: StateFlow<Boolean> get() = _isForecastLoading
+
     fun getCurrentWeather(cityId: Int) {
         viewModelScope.launch {
-            //_isCurrentWeatherLoading.value = true
+            _isCurrentWeatherLoading.value = true
             weatherCityUseCases.getCurrentWeatherUseCase.invoke(cityId = cityId)
                 .collect { weather ->
                     _currentWeather.value = weather?.toCurrentWeatherUI()
-                    //_isCurrentWeatherLoading.value = false
+                    _isCurrentWeatherLoading.value = false
                 }
         }
     }
 
     fun getDailyWeather(cityId: Int) {
         viewModelScope.launch {
-            //_isForecastLoading.value = true
+            _isForecastLoading.value = true
             weatherCityUseCases.getWeatherForWeekUseCase.invoke(cityId = cityId)
                 .collect { weather ->
                     _hourlyForecast.value = weather?.toHourlyForecastUI(size = 9)
                     _dailyForecast.value = weather?.toDailyForecastUI()
-                    //_isForecastLoading.value = false
+                    _isForecastLoading.value = false
                 }
         }
     }

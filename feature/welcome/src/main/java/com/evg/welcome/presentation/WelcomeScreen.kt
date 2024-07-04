@@ -2,9 +2,12 @@ package com.evg.welcome.presentation
 
 import android.content.res.Configuration
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.evg.resource.LocalNavHostController
 import com.evg.resource.theme.WeatherTheme
@@ -63,10 +67,13 @@ fun WelcomeScreen(
                 Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Column {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
                     Text(
-                        text = "Загрузка списка городов"
+                        text = "Loading a list of cities"
                     )
+                    Spacer(modifier = Modifier.height(20.dp))
                     CircularProgressIndicator(
                         color = MaterialTheme.colorScheme.primary
                     )

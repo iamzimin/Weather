@@ -57,7 +57,7 @@ fun MainScreen() {
                                 type = NavType.IntType
                                 defaultValue = -1
                             }
-                        )
+                        ),
                     ) { entry ->
                         val id = entry.arguments?.getInt("id") ?: -1
                         WeatherCityScreen(
