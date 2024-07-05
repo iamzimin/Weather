@@ -44,7 +44,6 @@ import com.evg.resource.theme.BorderRadius
 import com.evg.resource.theme.WeatherTheme
 import com.evg.weather_city.domain.utils.timestampFormatToString
 import com.evg.weather_city.presentation.model.CurrentWeatherCloudsUI
-import com.evg.weather_city.presentation.model.CurrentWeatherInfoUI
 import com.evg.weather_city.presentation.model.CurrentWeatherMainUI
 import com.evg.weather_city.presentation.model.CurrentWeatherSysUI
 import com.evg.weather_city.presentation.model.CurrentWeatherUI
@@ -168,7 +167,7 @@ fun WeatherContent(
 
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = currentWeather.weather[0].main,
+                        text = currentWeather.weatherMain,
                         textAlign = TextAlign.Center,
                     )
                 }
@@ -328,9 +327,10 @@ fun WeatherContentPreview() {
         WeatherContent(
             currentWeather = CurrentWeatherUI(
                 //coordinates = CurrentWeatherCoordinatesUI(lon = 34.56, lat = -78.9),
-                weather = listOf(
-                    CurrentWeatherInfoUI(id = 800, main = "Clear", description = "clear sky", icon = "01d")
-                ),
+                weatherId = 800,
+                weatherMain = "Clear",
+                weatherDescription = "clear sky",
+                weatherIcon =  "01d",
                 main = CurrentWeatherMainUI(
                     temp = 22, feelsLike = 25, tempMin = 20, tempMax = 25,
                     pressure = 1010, humidity = 70, seaLevel = 1015, groundLevel = 1005

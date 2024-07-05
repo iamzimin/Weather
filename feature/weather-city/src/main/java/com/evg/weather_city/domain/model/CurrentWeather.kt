@@ -2,7 +2,13 @@ package com.evg.weather_city.domain.model
 
 data class CurrentWeather(
     //val coordinates: CurrentWeatherCoordinates,
-    val weather: List<CurrentWeatherInfo>,
+
+    //val weather: List<CurrentWeatherInfo>,
+    val weatherId: Int, // Weather condition id
+    val weatherMain: String, // Group of weather parameters (Rain, Snow, Clouds etc.)
+    val weatherDescription: String, // Weather condition within the group.
+    val weatherIcon: String, // Weather icon id
+
     // val base: String, // Internal parameter
     val main: CurrentWeatherMain,
     val visibility: Int, // Visibility, meter. The maximum value of the visibility is 10 km
@@ -24,12 +30,12 @@ data class CurrentWeather(
     val lat: Double // Latitude of the location
 )*/
 
-data class CurrentWeatherInfo(
+/*data class CurrentWeatherInfo(
     val id: Int, // Weather condition id
     val main: String, // Group of weather parameters (Rain, Snow, Clouds etc.)
     val description: String, // Weather condition within the group.
     val icon: String // Weather icon id
-)
+)*/
 
 data class CurrentWeatherMain(
     val temp: Double, // Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit

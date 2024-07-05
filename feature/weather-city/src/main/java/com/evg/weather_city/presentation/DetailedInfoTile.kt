@@ -29,12 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.evg.resource.R
 import com.evg.resource.theme.WeatherTheme
-import com.evg.weather_city.presentation.model.CurrentWeatherCloudsUI
-import com.evg.weather_city.presentation.model.CurrentWeatherInfoUI
-import com.evg.weather_city.presentation.model.CurrentWeatherMainUI
-import com.evg.weather_city.presentation.model.CurrentWeatherSysUI
-import com.evg.weather_city.presentation.model.CurrentWeatherUI
-import com.evg.weather_city.presentation.model.CurrentWeatherWindUI
 
 @Composable
 fun DetailedInfoTile(

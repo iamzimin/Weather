@@ -2,13 +2,11 @@ package com.evg.weather_city.presentation.mapper
 
 import com.evg.weather_city.domain.model.CurrentWeather
 import com.evg.weather_city.domain.model.CurrentWeatherClouds
-import com.evg.weather_city.domain.model.CurrentWeatherInfo
 import com.evg.weather_city.domain.model.CurrentWeatherMain
 import com.evg.weather_city.domain.model.CurrentWeatherSys
 import com.evg.weather_city.domain.model.CurrentWeatherWind
 import com.evg.weather_city.domain.utils.kelvinToCelsius
 import com.evg.weather_city.presentation.model.CurrentWeatherCloudsUI
-import com.evg.weather_city.presentation.model.CurrentWeatherInfoUI
 import com.evg.weather_city.presentation.model.CurrentWeatherMainUI
 import com.evg.weather_city.presentation.model.CurrentWeatherSysUI
 import com.evg.weather_city.presentation.model.CurrentWeatherUI
@@ -17,7 +15,10 @@ import com.evg.weather_city.presentation.model.CurrentWeatherWindUI
 internal fun CurrentWeather.toCurrentWeatherUI(): CurrentWeatherUI {
     return CurrentWeatherUI(
         //coordinates = coordinates.toCurrentWeatherCoordinatesUI(),
-        weather = weather.map { it.toCurrentWeatherInfoUI() },
+        weatherId = weatherId,
+        weatherMain = weatherMain,
+        weatherDescription = weatherDescription,
+        weatherIcon = weatherIcon,
         main = main.toCurrentWeatherMainUI(),
         visibility = visibility,
         wind = wind.toCurrentWeatherWindUI(),
@@ -38,15 +39,6 @@ internal fun CurrentWeather.toCurrentWeatherUI(): CurrentWeatherUI {
         lat = lat
     )
 }*/
-
-internal fun CurrentWeatherInfo.toCurrentWeatherInfoUI(): CurrentWeatherInfoUI {
-    return CurrentWeatherInfoUI(
-        id = id,
-        main = main,
-        description = description,
-        icon = icon
-    )
-}
 
 internal fun CurrentWeatherMain.toCurrentWeatherMainUI(): CurrentWeatherMainUI {
     return CurrentWeatherMainUI(

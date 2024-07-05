@@ -7,7 +7,7 @@ internal fun CurrentWeatherDBO.toCityInfo(): CityInfo {
     return CityInfo(
         id = id,
         city = name,
-        skyDescription = weather[0].main,
+        skyDescription = weatherMain,
         temp = main.temp,
         tempMax = main.tempMax,
         tempMin = main.tempMin

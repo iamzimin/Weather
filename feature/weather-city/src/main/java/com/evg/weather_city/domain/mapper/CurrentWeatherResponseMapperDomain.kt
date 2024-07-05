@@ -1,5 +1,6 @@
 package com.evg.weather_city.domain.mapper
 
+import com.evg.weather_api.domain.mapper.toCurrentWeatherDBO
 import com.evg.weather_api.domain.models.CurrentWeatherCloudsResponse
 import com.evg.weather_api.domain.models.CurrentWeatherInfoResponse
 import com.evg.weather_api.domain.models.CurrentWeatherMainResponse
@@ -8,7 +9,6 @@ import com.evg.weather_api.domain.models.CurrentWeatherSysResponse
 import com.evg.weather_api.domain.models.CurrentWeatherWindResponse
 import com.evg.weather_city.domain.model.CurrentWeather
 import com.evg.weather_city.domain.model.CurrentWeatherClouds
-import com.evg.weather_city.domain.model.CurrentWeatherInfo
 import com.evg.weather_city.domain.model.CurrentWeatherMain
 import com.evg.weather_city.domain.model.CurrentWeatherSys
 import com.evg.weather_city.domain.model.CurrentWeatherWind
@@ -16,7 +16,10 @@ import com.evg.weather_city.domain.model.CurrentWeatherWind
 internal fun CurrentWeatherResponse.toCurrentWeather(): CurrentWeather {
     return CurrentWeather(
         //coordinates = coordinates.toCurrentWeatherCoordinates(),
-        weather = weather.map { it.toCurrentWeatherInfo() },
+        weatherId = this.weather.getOrNull(0)?.id ?: -1,
+        weatherMain = this.weather.getOrNull(0)?.main ?: "",
+        weatherDescription = this.weather.getOrNull(0)?.description ?: "",
+        weatherIcon = this.weather.getOrNull(0)?.icon ?: "",
         main = main.toCurrentWeatherMain(),
         visibility = visibility,
         wind = wind.toCurrentWeatherWind(),
@@ -27,7 +30,7 @@ internal fun CurrentWeatherResponse.toCurrentWeather(): CurrentWeather {
         sys = sys.toCurrentWeatherSys(),
         timezone = timezone,
         id = id,
-        name = name
+        name = name,
     )
 }
 
@@ -37,15 +40,6 @@ internal fun CurrentWeatherResponse.toCurrentWeather(): CurrentWeather {
         lat = lat
     )
 }*/
-
-internal fun CurrentWeatherInfoResponse.toCurrentWeatherInfo(): CurrentWeatherInfo {
-    return CurrentWeatherInfo(
-        id = id,
-        main = main,
-        description = description,
-        icon = icon
-    )
-}
 
 internal fun CurrentWeatherMainResponse.toCurrentWeatherMain(): CurrentWeatherMain {
     return CurrentWeatherMain(

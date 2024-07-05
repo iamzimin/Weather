@@ -9,7 +9,10 @@ import kotlinx.serialization.Serializable
 data class CurrentWeatherDBO(
     @PrimaryKey val id: Int,
     //val coordinates: CurrentWeatherCoordinatesDBO,
-    val weather: List<CurrentWeatherInfoDBO>,
+    val weatherId: Int,
+    val weatherMain: String,
+    val weatherDescription: String,
+    val weatherIcon: String,
     // val base: String,
     val main: CurrentWeatherMainDBO,
     val visibility: Int,
@@ -29,13 +32,13 @@ data class CurrentWeatherDBO(
     val lat: Double 
 )*/
 
-@Serializable
+/*@Serializable
 data class CurrentWeatherInfoDBO(
     val id: Int,
     val main: String,
     val description: String,
     val icon: String
-)
+)*/
 
 @Serializable
 data class CurrentWeatherMainDBO(

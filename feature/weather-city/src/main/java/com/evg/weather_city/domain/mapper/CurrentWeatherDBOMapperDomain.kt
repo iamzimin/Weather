@@ -2,20 +2,21 @@ package com.evg.weather_city.domain.mapper
 
 import com.evg.database.domain.models.CurrentWeatherCloudsDBO
 import com.evg.database.domain.models.CurrentWeatherDBO
-import com.evg.database.domain.models.CurrentWeatherInfoDBO
 import com.evg.database.domain.models.CurrentWeatherMainDBO
 import com.evg.database.domain.models.CurrentWeatherSysDBO
 import com.evg.database.domain.models.CurrentWeatherWindDBO
 import com.evg.weather_city.domain.model.CurrentWeather
 import com.evg.weather_city.domain.model.CurrentWeatherClouds
-import com.evg.weather_city.domain.model.CurrentWeatherInfo
 import com.evg.weather_city.domain.model.CurrentWeatherMain
 import com.evg.weather_city.domain.model.CurrentWeatherSys
 import com.evg.weather_city.domain.model.CurrentWeatherWind
 
 internal fun CurrentWeatherDBO.toCurrentWeather(): CurrentWeather {
     return CurrentWeather(
-        weather = weather.map { it.toCurrentWeatherInfo() },
+        weatherId = weatherId,
+        weatherMain = weatherMain,
+        weatherDescription = weatherDescription,
+        weatherIcon = weatherIcon,
         main = main.toCurrentWeatherMain(),
         visibility = visibility,
         wind = wind.toCurrentWeatherWind(),
@@ -25,15 +26,6 @@ internal fun CurrentWeatherDBO.toCurrentWeather(): CurrentWeather {
         timezone = timezone,
         id = id,
         name = name
-    )
-}
-
-internal fun CurrentWeatherInfoDBO.toCurrentWeatherInfo(): CurrentWeatherInfo {
-    return CurrentWeatherInfo(
-        id = id,
-        main = main,
-        description = description,
-        icon = icon
     )
 }
 

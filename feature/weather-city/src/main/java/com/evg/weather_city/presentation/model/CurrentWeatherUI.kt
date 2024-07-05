@@ -2,7 +2,10 @@ package com.evg.weather_city.presentation.model
 
 data class CurrentWeatherUI(
     //val coordinates: CurrentWeatherCoordinatesUI,
-    val weather: List<CurrentWeatherInfoUI>,
+    val weatherId: Int,
+    val weatherMain: String,
+    val weatherDescription: String,
+    val weatherIcon: String,
     // val base: String,
     val main: CurrentWeatherMainUI,
     val visibility: Int, 
@@ -22,13 +25,6 @@ data class CurrentWeatherUI(
     val lon: Double, 
     val lat: Double 
 )*/
-
-data class CurrentWeatherInfoUI(
-    val id: Int, 
-    val main: String, 
-    val description: String, 
-    val icon: String 
-)
 
 data class CurrentWeatherMainUI(
     val temp: Int, 

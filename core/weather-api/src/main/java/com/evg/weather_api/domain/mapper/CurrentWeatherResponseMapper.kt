@@ -2,12 +2,10 @@ package com.evg.weather_api.domain.mapper
 
 import com.evg.database.domain.models.CurrentWeatherCloudsDBO
 import com.evg.database.domain.models.CurrentWeatherDBO
-import com.evg.database.domain.models.CurrentWeatherInfoDBO
 import com.evg.database.domain.models.CurrentWeatherMainDBO
 import com.evg.database.domain.models.CurrentWeatherSysDBO
 import com.evg.database.domain.models.CurrentWeatherWindDBO
 import com.evg.weather_api.domain.models.CurrentWeatherCloudsResponse
-import com.evg.weather_api.domain.models.CurrentWeatherInfoResponse
 import com.evg.weather_api.domain.models.CurrentWeatherMainResponse
 import com.evg.weather_api.domain.models.CurrentWeatherResponse
 import com.evg.weather_api.domain.models.CurrentWeatherSysResponse
@@ -16,7 +14,10 @@ import com.evg.weather_api.domain.models.CurrentWeatherWindResponse
 fun CurrentWeatherResponse.toCurrentWeatherDBO(): CurrentWeatherDBO {
     return CurrentWeatherDBO(
         id = this.id,
-        weather = this.weather.map { it.toCurrentWeatherInfoDBO() },
+        weatherId = this.weather.getOrNull(0)?.id ?: -1,
+        weatherMain = this.weather.getOrNull(0)?.main ?: "",
+        weatherDescription = this.weather.getOrNull(0)?.description ?: "",
+        weatherIcon = this.weather.getOrNull(0)?.icon ?: "",
         main = this.main.toCurrentWeatherMainDBO(),
         visibility = this.visibility,
         wind = this.wind.toCurrentWeatherWindDBO(),
@@ -25,15 +26,6 @@ fun CurrentWeatherResponse.toCurrentWeatherDBO(): CurrentWeatherDBO {
         sys = this.sys.toCurrentWeatherSysDBO(),
         timezone = this.timezone,
         name = this.name
-    )
-}
-
-fun CurrentWeatherInfoResponse.toCurrentWeatherInfoDBO(): CurrentWeatherInfoDBO {
-    return CurrentWeatherInfoDBO(
-        id = this.id,
-        main = this.main,
-        description = this.description,
-        icon = this.icon
     )
 }
 

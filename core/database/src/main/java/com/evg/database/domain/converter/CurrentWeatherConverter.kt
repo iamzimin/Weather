@@ -2,7 +2,6 @@ package com.evg.database.domain.converter
 
 import androidx.room.TypeConverter
 import com.evg.database.domain.models.CurrentWeatherCloudsDBO
-import com.evg.database.domain.models.CurrentWeatherInfoDBO
 import com.evg.database.domain.models.CurrentWeatherMainDBO
 import com.evg.database.domain.models.CurrentWeatherSysDBO
 import com.evg.database.domain.models.CurrentWeatherWindDBO
@@ -10,16 +9,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 object CurrentWeatherConverter {
-    @TypeConverter
-    fun fromCurrentWeatherInfoList(weather: List<CurrentWeatherInfoDBO>): String {
-        return Json.encodeToString(weather)
-    }
-
-    @TypeConverter
-    fun toCurrentWeatherInfoList(weatherString: String): List<CurrentWeatherInfoDBO> {
-        return Json.decodeFromString(weatherString)
-    }
-
     @TypeConverter
     fun fromCurrentWeatherMain(main: CurrentWeatherMainDBO): String {
         return Json.encodeToString(main)
