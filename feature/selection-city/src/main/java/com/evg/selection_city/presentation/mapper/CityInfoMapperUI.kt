@@ -9,6 +9,7 @@ internal fun CityInfo.toCityInfoUI(): CityInfoUI {
         id = id,
         city = city,
         skyDescription = skyDescription,
+        weatherIcon = weatherIcon,
         temp = temp.kelvinToCelsius(),
         tempMin = tempMin.kelvinToCelsius(),
         tempMax = tempMax.kelvinToCelsius(),

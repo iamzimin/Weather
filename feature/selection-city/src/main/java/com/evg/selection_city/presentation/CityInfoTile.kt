@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.evg.resource.LocalNavHostController
+import com.evg.resource.ShimmerImage
 import com.evg.resource.theme.BorderRadius
 import com.evg.resource.theme.WeatherTheme
 import com.evg.selection_city.presentation.model.CityInfoUI
@@ -54,65 +56,31 @@ fun CityInfoTile(
                 .padding(vertical = 20.dp, horizontal = 10.dp),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            if (!isDeleteMode) {
-                Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 10.dp)
+                ) {
                     Text(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 10.dp),
                         text = cityInfo.city,
-                        style = MaterialTheme.typography.displaySmall,
+                        style = MaterialTheme.typography.headlineLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
 
-                    Text(
-                        text = "${cityInfo.temp}°C",
-                        style = MaterialTheme.typography.displaySmall,
-                    )
-                }
+                    Spacer(modifier = Modifier.height(5.dp))
 
-                Spacer(modifier = Modifier.height(5.dp))
-
-                Row {
                     Text(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 10.dp),
                         text = cityInfo.skyDescription,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-
-                    Text(
-                        text = "${cityInfo.tempMax}/${cityInfo.tempMin}°C"
-                    )
                 }
-            } else {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 10.dp)
-                    ) {
-                        Text(
-                            text = cityInfo.city,
-                            style = MaterialTheme.typography.displaySmall,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
 
-                        Spacer(modifier = Modifier.height(5.dp))
-
-                        Text(
-                            text = cityInfo.skyDescription,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-
+                if (isDeleteMode) {
                     if (currentCityId != cityInfo.id) {
                         IconButton(
                             modifier = Modifier
@@ -130,6 +98,18 @@ fun CityInfoTile(
                             )
                         }
                     }
+                } else {
+                    ShimmerImage(
+                        url = cityInfo.getIconUrl(),
+                        size = 30,
+                    )
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Text(
+                        text = "${cityInfo.temp}°C",
+                        style = MaterialTheme.typography.headlineLarge,
+                    )
                 }
             }
         }
@@ -145,6 +125,7 @@ fun CityInfoTileDeleteModePreview() {
             id = 1,
             city = "Paris",
             skyDescription = "Sunny",
+            weatherIcon = "",
             temp = 17,
             tempMax = 20,
             tempMin = 15,

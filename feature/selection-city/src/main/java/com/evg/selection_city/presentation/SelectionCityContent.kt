@@ -188,6 +188,7 @@ fun SelectionCityContentPreview() {
                     id = it,
                     city = "Paris",
                     skyDescription = "Sunny",
+                    weatherIcon = "",
                     temp = 205.4,
                     tempMax = 211.4,
                     tempMin = 200.4,

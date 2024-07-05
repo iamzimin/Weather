@@ -60,4 +60,11 @@ dependencies {
 
     // Swipe Refresh
     implementation(libs.swiperefresh.compose)
+
+    // Coil
+    implementation(libs.coil.compose)
+
+    // Shimmer
+    implementation(libs.shimmer.compose)
+
 }

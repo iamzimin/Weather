@@ -24,14 +24,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
 import com.evg.resource.R
+import com.evg.resource.ShimmerImage
 import com.evg.resource.theme.BorderRadius
 import com.evg.resource.theme.Pink80
 import com.evg.resource.theme.WeatherTheme
 import com.evg.weather_city.domain.utils.timestampFormatToString
 import com.evg.weather_city.presentation.model.HourlyForecastUI
-import com.valentinilk.shimmer.shimmer
 
 @Composable
 fun HourlyRowTile(
@@ -54,41 +53,9 @@ fun HourlyRowTile(
             textAlign = TextAlign.Center,
         )
 
-
-        SubcomposeAsyncImage(
-            model = hourlyForecastUI.getIconUrl(),
-            modifier = Modifier.size(30.dp),
-            contentDescription = hourlyForecastUI.getIconUrl(),
-            alignment = Alignment.CenterStart,
-            contentScale = ContentScale.FillBounds,
-            loading = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(shape = RoundedCornerShape(BorderRadius))
-                        .shimmer(),
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.LightGray)
-                    )
-                }
-            },
-            error = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                ) {
-                    Image(
-                        modifier = Modifier
-                            .padding(5.dp),
-                        painter = painterResource(id = R.drawable.error),
-                        contentDescription = "Error",
-                        colorFilter = ColorFilter.tint(Pink80),
-                    )
-                }
-            },
+        ShimmerImage(
+            url = hourlyForecastUI.getIconUrl(),
+            size = 30,
         )
 
         Text(

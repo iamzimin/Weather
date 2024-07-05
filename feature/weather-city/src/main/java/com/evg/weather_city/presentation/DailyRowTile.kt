@@ -28,15 +28,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
 import com.evg.resource.theme.BorderRadius
 import com.evg.resource.theme.WeatherTheme
 import com.evg.resource.R
+import com.evg.resource.ShimmerImage
 import com.evg.resource.theme.Pink80
 import com.evg.weather_city.domain.utils.convertTimestampToDayOfWeek
 import com.evg.weather_city.domain.utils.timestampFormatToString
 import com.evg.weather_city.presentation.model.DailyForecastUI
-import com.valentinilk.shimmer.shimmer
 
 @Composable
 fun DailyRowTile(
@@ -75,41 +74,9 @@ fun DailyRowTile(
             )
         }
 
-
-        SubcomposeAsyncImage(
-            model = dailyForecastUI.getIconUrl(),
-            modifier = Modifier.size(30.dp),
-            contentDescription = dailyForecastUI.getIconUrl(),
-            alignment = Alignment.CenterStart,
-            contentScale = ContentScale.FillBounds,
-            loading = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(shape = RoundedCornerShape(BorderRadius))
-                        .shimmer(),
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.LightGray)
-                    )
-                }
-            },
-            error = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                ) {
-                    Image(
-                        modifier = Modifier
-                            .padding(5.dp),
-                        painter = painterResource(id = R.drawable.error),
-                        contentDescription = "Error",
-                        colorFilter = ColorFilter.tint(Pink80),
-                    )
-                }
-            },
+        ShimmerImage(
+            url = dailyForecastUI.getIconUrl(),
+            size = 30,
         )
 
         Column(

@@ -62,12 +62,6 @@ dependencies {
     ksp(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt.navigation)
 
-    // Coil
-    implementation(libs.coil.compose)
-
-    // Shimmer
-    implementation(libs.shimmer.compose)
-
     // Swipe Refresh
     implementation(libs.swiperefresh.compose)
 }

@@ -91,7 +91,6 @@ class WeatherApiRepositoryImpl(
 
     override suspend fun getForecastWeeklyWeather(cityId: Int): WeeklyForecastResponse? {
         return try {
-            //throw Exception("dsfsd")
             val weather = weatherApi.getWeeklyForecast(
                 cityId = cityId,
                 apiKey = weatherApiKey,
