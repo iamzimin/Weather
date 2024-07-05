@@ -23,7 +23,7 @@ internal fun WeeklyForecast.toDailyForecastUI(): List<DailyForecastUI> {
         currentDayForecasts.add(forecast)
     }
 
-    if (currentDayForecasts.isNotEmpty()) { //TODO
+    if (currentDayForecasts.isNotEmpty()) {
         val dailyForecast = mapToDailyForecast(currentDayForecasts)
         dailyForecasts.add(dailyForecast)
     }

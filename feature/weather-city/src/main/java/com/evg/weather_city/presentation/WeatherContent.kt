@@ -42,6 +42,7 @@ import com.evg.resource.LocalNavHostController
 import com.evg.resource.R
 import com.evg.resource.theme.BorderRadius
 import com.evg.resource.theme.WeatherTheme
+import com.evg.weather_city.domain.utils.isStartOfNewDay
 import com.evg.weather_city.domain.utils.timestampFormatToString
 import com.evg.weather_city.presentation.model.CurrentWeatherCloudsUI
 import com.evg.weather_city.presentation.model.CurrentWeatherMainUI
@@ -156,10 +157,22 @@ fun WeatherContent(
                             fontSize = 25.sp,
                         )
                     }
+
+                    var minMaxTemp = "${currentWeather.main.tempMax}/${currentWeather.main.tempMin}°C"
+                    dailyWeather.getOrNull(0)?.let { today ->
+                        val isNewDay = isStartOfNewDay(
+                            previousDt = currentWeather.timestamp,
+                            currentDt = today.timestamp,
+                            timezoneOffsetSeconds = currentWeather.timezone,
+                        )
+                        if (!isNewDay) {
+                            minMaxTemp = "${today.tempMax}/${today.tempMin}°C"
+                        }
+                    }
                     Text(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        text = "${currentWeather.main.tempMax}/${currentWeather.main.tempMin}°C",
+                        text = minMaxTemp,
                         textAlign = TextAlign.Center,
                     )
 
