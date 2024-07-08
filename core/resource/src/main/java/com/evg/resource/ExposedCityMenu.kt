@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -29,6 +30,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.evg.resource.model.CityUI
 import com.evg.resource.theme.WeatherTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,6 +45,8 @@ fun ExposedCityMenu(
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     var selectedText by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue("")) }
+    var filteredCities by remember { mutableStateOf<List<CityUI>>(emptyList()) }
+    val coroutineScope = rememberCoroutineScope()
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -57,6 +63,22 @@ fun ExposedCityMenu(
             onValueChange = { newText ->
                 selectedText = newText
                 onEdit(newText.text)
+                coroutineScope.launch {
+                    val cities = listCities ?: return@launch
+                    filteredCities = if (newText.text.length >= 5) {
+                        val options = withContext(Dispatchers.Default) {
+                            cities.filter { it.name.contains(newText.text, ignoreCase = true) }
+                                .sortedBy { it.name }
+                        }
+                        if (options.size <= 30) {
+                            options
+                        } else {
+                            emptyList()
+                        }
+                    } else {
+                        emptyList()
+                    }
+                }
             },
             label = { Text(text = "City") },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -66,29 +88,20 @@ fun ExposedCityMenu(
             singleLine = true,
         )
 
-        listCities?.let { cities ->
-            if (selectedText.text.length < 5) return@ExposedDropdownMenuBox
-
-            val filteredOptions =
-                cities.filter { it.name.contains(selectedText.text, ignoreCase = true) }
-
-            if (filteredOptions.size > 30) return@ExposedDropdownMenuBox
-
-            if (filteredOptions.isNotEmpty()) {
-                ExposedDropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { }
-                ) {
-                    filteredOptions.forEach { item ->
-                        DropdownMenuItem(
-                            text = { Text(text = item.name) },
-                            onClick = {
-                                selectedText = TextFieldValue(text = item.name, selection = TextRange(item.name.length))
-                                expanded = false
-                                onSelect(item)
-                            }
-                        )
-                    }
+        if (filteredCities.isNotEmpty()) {
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                filteredCities.forEach { item ->
+                    DropdownMenuItem(
+                        text = { Text(text = item.name) },
+                        onClick = {
+                            selectedText = TextFieldValue(text = item.name, selection = TextRange(item.name.length))
+                            expanded = false
+                            onSelect(item)
+                        }
+                    )
                 }
             }
         }
