@@ -1,12 +1,12 @@
 # Weather
 
-Стек: Kotlin, Clean Architecture, Jetpack Compose, Coroutine, Retrofit, Room, Dagger Hilt, MVVM
+Стэк: Kotlin, Clean Architecture, Jetpack Compose, Coroutine, Retrofit, Room, Dagger Hilt, MVVM
 
-## Тестовое задание Android от MediaSoft
+## Задание Android от MediaSoft
 
 - Зимин Евгений
 - Приложение для просмотра погоды
-- [Скачать apk](https://github.com/iamzimin/WeatherMediaSoft/releases/latest)
+- [Скачать apk](https://github.com/iamzimin/Weather/releases/latest)
 
 
 Функционал приложения:
@@ -24,10 +24,10 @@
 
 
 ## Скриншоты
-![1](https://github.com/iamzimin/WeatherMediaSoft/assets/94135768/41e7fd5f-b83e-4944-9ed3-3c5deb631282)
-![2](https://github.com/iamzimin/WeatherMediaSoft/assets/94135768/a86a76e8-965b-41c5-a880-8df9f9ffe5ba)
-![3](https://github.com/iamzimin/WeatherMediaSoft/assets/94135768/2533b234-caa3-46c5-b0a3-ed79dfa7c812)
-![4](https://github.com/iamzimin/WeatherMediaSoft/assets/94135768/b5a9627b-0d2c-4a55-8f76-5e841a5b8497)
+<img src="https://github.com/user-attachments/assets/2f9e1ab0-1d40-4661-a091-5000c69cb544" alt="Image1" width="200"/>
+<img src="https://github.com/user-attachments/assets/226e9856-ad45-4658-bcbe-48d8ee760ea3" alt="Image2" width="153"/>
+<img src="https://github.com/user-attachments/assets/de19de4e-1fff-4050-978c-958c72c274db" alt="Image3" width="200"/>
+<img src="https://github.com/user-attachments/assets/f1c6913e-ece3-4594-8efe-90ba1393f8a0" alt="Image4" width="200"/>
 
 
 
